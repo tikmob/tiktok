@@ -69,7 +69,13 @@ async function checkServers() {
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 5000);
-      const res = await fetch(api.testUrl, { method: "HEAD", signal: controller.signal });
+      let res;
+if (api.name === "TikMob Worker") {
+  res = await fetch(api.testUrl, { method: "GET", signal: controller.signal });
+} else {
+  res = await fetch(api.testUrl, { method: "HEAD", signal: controller.signal });
+}
+
       clearTimeout(timeout);
       if (res.ok) {
         api.working = true;
