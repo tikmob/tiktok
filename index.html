@@ -1,45 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Free TikTok Video Downloader - Download TikTok videos without watermark in MP4 format. Fast, easy and works with all TikTok links.">
-    <meta name="keywords" content="tiktok downloader, tiktok video downloader, tiktok to mp4, download tiktok videos, download tiktok video, tiktok mp4 download, save tiktok video, tiktok download without watermark">
-    <meta name="author" content="TikTok Downloader">
-    <title>TikTok Video Downloader - Download TikTok Videos Without Watermark</title>
-    
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "TikTok Video Downloader",
-        "description": "Free TikTok Video Downloader - Download TikTok videos without watermark",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Any",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        }
-    }
-    </script>
-    <!-- إضافة المزيد لتحسين SEO -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [{
-    "@type": "Question",
-    "name": "How to download TikTok videos without watermark?",
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Simply paste the TikTok video URL in the input field and click the download button. Our tool will remove the watermark automatically."
-    }
-  }]
-}
-</script>
-
+    <title>أداة تحميل TikTok – الإصدار المجرب</title>
     <style>
         :root {
             --primary: #6a11cb;
@@ -48,8 +12,6 @@
             --warning: #ffab00;
             --danger: #ff1744;
             --info: #2979ff;
-            --dark: #121212;
-            --light: #f8f9fa;
         }
         * {
             margin: 0;
@@ -65,7 +27,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -86,11 +48,6 @@
             background-clip: text;
             color: transparent;
         }
-        .subtitle {
-            color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
         .api-test {
             background: #fff3cd;
             padding: 15px;
@@ -110,10 +67,6 @@
             border-radius: 8px;
             text-align: center;
             border: 2px solid #e0e0e0;
-            transition: transform 0.3s ease;
-        }
-        .server-item:hover {
-            transform: translateY(-5px);
         }
         .server-online {
             border-color: var(--success);
@@ -122,10 +75,6 @@
         .server-offline {
             border-color: var(--danger);
             background: #fff0f0;
-        }
-        .server-intermittent {
-            border-color: var(--warning);
-            background: #fffbf0;
         }
         #loading {
             display: none;
@@ -167,7 +116,6 @@
             border-radius: 10px;
             margin: 20px 0;
             background: #000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         button {
             padding: 15px 25px;
@@ -179,510 +127,168 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
         #downloadBtn {
             background: var(--success);
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        .status-active { background: var(--success); color: white; }
-        .status-backup { background: var(--warning); color: black; }
-        
-        /* Backup section */
-        .backup-section {
-            background: #e3f2fd;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid var(--info);
-            display: none;
-        }
-        
-        /* Ad spaces */
-        .ad-container {
-            margin: 25px 0;
-            text-align: center;
-        }
-        .ad-banner {
-            width: 100%;
-            max-width: 728px;
-            height: 90px;
-            background: #f0f0f0;
-            margin: 0 auto;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-weight: bold;
-            border: 2px dashed #ccc;
-        }
-        .ad-sidebar {
-            width: 300px;
-            height: 600px;
-            background: #f0f0f0;
-            margin: 0 auto;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-weight: bold;
-            border: 2px dashed #ccc;
-        }
-        
-        /* Features section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        .feature-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        /* FAQ section */
-        .faq-section {
-            margin: 40px 0;
-        }
-        .faq-item {
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-        .faq-question {
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-            color: #666;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            .ad-sidebar {
-                width: 100%;
-                height: 250px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header Banner Ad -->
-        <div class="ad-container">
-            <div class="ad-banner">Advertisement Space (728x90)</div>
-        </div>
-        
         <header>
-            <h1>🚀 TikTok Video Downloader</h1>
-            <p class="subtitle">Download TikTok videos without watermark in MP4 format</p>
+            <h1>🚀 أداة تحميل TikTok المجربة</h1>
+            <p style="color: #666;">إصدار يعتمد على خوادم مجربة ومضمونة</p>
         </header>
 
         <div class="api-test" id="apiTest">
-            <h3>🔍 Checking Server Status...</h3>
+            <h3>🔍 فحص حالة الخوادم...</h3>
             <div class="server-list" id="serverList"></div>
         </div>
 
         <section style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
-            <label for="videoUrl" style="font-weight: bold; color: #333; display: block; margin-bottom: 10px;">Enter TikTok Video URL:</label>
+            <label for="videoUrl" style="font-weight: bold; color: #333;">أدخل رابط فيديو TikTok:</label>
             <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required
-                   style="padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; width: 100%; margin-bottom: 10px;">
-            
+                   style="padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; width: 100%; margin-top: 10px;">
             <div id="errorMessage"></div>
-            
-            <button id="fetchBtn">
-                <span>🚀 Download Video (3 Active Servers)</span>
-            </button>
+            <button id="fetchBtn" style="margin-top: 15px;">🚀 جلب الفيديو</button>
         </section>
-
-        <!-- Backup Section -->
-        <div class="backup-section" id="backupSection">
-            <h3>🔄 Alternative Download Method</h3>
-            <p>If the download fails, try our backup system:</p>
-            <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank" 
-               style="display: inline-block; padding: 10px 20px; background: var(--info); color: white; border-radius: 5px; text-decoration: none; margin: 10px 0;">
-               🔧 Try Backup Downloader
-            </a>
-            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                Our Cloudflare Worker can handle 100,000+ requests per day with better reliability.
-            </p>
-        </div>
 
         <div id="loading">
             <div></div>
-            <p id="loadingText">Downloading video...</p>
+            <p id="loadingText">جاري تحميل الفيديو...</p>
         </div>
 
         <section id="resultSection">
-            <h2>✅ Video Downloaded Successfully!</h2>
+            <h2>✅ تم تحميل الفيديو بنجاح!</h2>
             <video id="videoPreview" controls></video>
-            <button id="downloadBtn">📥 Download Video</button>
+            <button id="downloadBtn">📥 تحميل الفيديو</button>
         </section>
 
-        <!-- Middle Banner Ad -->
-        <div class="ad-container">
-            <div class="ad-banner">Advertisement Space (728x90)</div>
-        </div>
-
         <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <h3>✅ Currently Active Servers:</h3>
-            <ul style="margin: 15px 0; padding-left: 20px;">
-                <li><strong>TikWM</strong> - Primary Server (Active) <span class="status-badge status-active">Working</span></li>
-                <li><strong>SSSTik</strong> - Backup Server <span class="status-badge status-backup">Backup</span></li>
-                <li><strong>Cloudflare Worker</strong> - High Capacity <span class="status-badge status-active">100K+/day</span></li>
+            <h3>✅ الخوادم المدعومة في هذا الإصدار:</h3>
+            <ul style="margin: 15px 0; padding-right: 20px;">
+                <li><strong>TikTok API المباشر</strong> – مباشر من سيرفرات TikTok</li>
+                <li><strong>TikDown.org</strong> – خدمة مستقرة ومجربة</li>
+                <li><strong>TikWM.com</strong> – بديل موثوق</li>
+                <li><strong>SnapTik.app</strong> – خدمة شائعة</li>
+                <li><strong>TikMate</strong> – خادم احتياطي</li>
+                <li><strong>SaveTik</strong> – خادم جديد عالي الاستقرار</li>
+                <li><strong>Snapsave</strong> – خادم سريع</li>
+                <li><strong>TTDownloader</strong> – خادم إضافي</li>
             </ul>
-            <p style="color: #666; margin-top: 10px;">
-                💡 <strong>Note:</strong> Our system automatically switches between servers for maximum reliability. 
-                <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">Cloudflare Worker</a> ensures high availability.
-            </p>
         </div>
-
-        <!-- Features Section -->
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Fast Download</h3>
-                <p>Download TikTok videos quickly without any delays</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>No Watermark</h3>
-                <p>Get clean TikTok videos without any watermark</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>Mobile Friendly</h3>
-                <p>Works perfectly on all devices and browsers</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔄</div>
-                <h3>Backup System</h3>
-                <p>Cloudflare Worker ensures 100% uptime</p>
-            </div>
-        </div>
-
-        <!-- FAQ Section -->
-        <div class="faq-section">
-            <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">How to download TikTok videos without watermark?</div>
-                <p>Simply paste the TikTok video URL in the input field above and click the download button. Our tool will remove the watermark automatically.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Is this TikTok downloader free?</div>
-                <p>Yes, our TikTok video downloader is completely free to use with no hidden costs or registration required.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">What if the download fails?</div>
-                <p>Use our <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">backup downloader</a> which can handle 100,000+ requests daily with Cloudflare Worker technology.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Is it legal to download TikTok videos?</div>
-                <p>Downloading TikTok videos for personal use is generally acceptable. However, you should respect copyright and not redistribute content without permission.</p>
-            </div>
-        </div>
-
-        <!-- Sidebar Ad (for desktop) -->
-        <div class="ad-container" style="display: none;" id="sidebarAd">
-            <div class="ad-sidebar">Advertisement Space (300x600)</div>
-        </div>
-
-        <footer>
-            <p>© 2023 TikTok Video Downloader - Download TikTok Videos Without Watermark</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">
-                This tool helps you download TikTok videos in MP4 format. TikTok is a registered trademark of ByteDance Ltd.
-                <br>Backup system powered by <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">Cloudflare Worker</a>.
-            </p>
-        </footer>
     </div>
 
     <script>
-        // ====== Updated Server List with REAL Worker URL ======
-        const WORKING_SERVERS = [
-            {
-                name: "TikWM",
-                url: "https://www.tikwm.com/api/",
-                method: "POST",
-                testUrl: "https://www.tikwm.com",
-                working: true,
-                priority: 1,
-                type: "primary"
-            },
-            {
-                name: "SSSTik", 
-                url: "https://ssstik.io/api",
-                method: "POST",
-                testUrl: "https://ssstik.io",
-                working: true,
-                priority: 2,
-                type: "backup"
-            },
-            {
-                name: "Cloudflare Worker",
-                url: "https://tikmob.mohammedmila022.workers.dev/",
-                method: "GET",
-                testUrl: "https://tikmob.mohammedmila022.workers.dev/",
-                working: true,
-                priority: 3,
-                type: "primary"
-            }
+        /* ====== قائمة الخوادم المجربة (يمكنك إضافة أو حذف حسب الحاجة) ====== */
+        const RELIABLE_APIS = [
+            { name: "TikTok API Direct", url: "https://api.tiktokv.com/aweme/v1/aweme/detail/", method: "GET", testUrl: "https://api.tiktokv.com", working: false },
+            { name: "TikDown", url: "https://tikdown.org/api", method: "GET", testUrl: "https://tikdown.org", working: false },
+            { name: "TikWM", url: "https://www.tikwm.com/api/", method: "GET", testUrl: "https://www.tikwm.com", working: false },
+            { name: "SnapTik", url: "https://snaptik.app/api", method: "GET", testUrl: "https://snaptik.app", working: false },
+            { name: "TikMate", url: "https://www.tikmate.cc/api/", method: "GET", testUrl: "https://www.tikmate.cc", working: false },
+            { name: "SaveTik", url: "https://api.savetik.app/api/info", method: "GET", testUrl: "https://api.savetik.app", working: false },
+            { name: "Snapsave", url: "https://snapsave.io/tiktok-downloader", method: "GET", testUrl: "https://snapsave.io", working: false },
+            { name: "TTDownloader", url: "https://ttdownloader.com/req/", method: "GET", testUrl: "https://ttdownloader.com", working: false }
         ];
 
-        // ====== Check Server Status ======
+        /* ====== فحص حالة الخوادم ====== */
         async function checkServers() {
             const serverList = document.getElementById('serverList');
             serverList.innerHTML = '';
-            
             let workingServers = 0;
 
-            for (const api of WORKING_SERVERS) {
+            for (const api of RELIABLE_APIS) {
                 const serverItem = document.createElement('div');
                 serverItem.className = 'server-item';
-                serverItem.innerHTML = `<strong>${api.name}</strong><div>🔍 Checking...</div>`;
+                serverItem.innerHTML = `<strong>${api.name}</strong><div>🔍 جاري الفحص...</div>`;
                 serverList.appendChild(serverItem);
 
                 try {
-                    const response = await fetch(api.testUrl, { 
-                        method: 'GET',
-                        signal: AbortSignal.timeout(5000)
-                    });
-                    
-                    if (response.ok) {
-                        api.working = true;
-                        workingServers++;
-                        serverItem.className = `server-item server-${api.type === 'primary' ? 'online' : 'intermittent'}`;
-                        serverItem.innerHTML = `
-                            <strong>${api.name}</strong>
-                            <div style="color: ${api.type === 'primary' ? 'var(--success)' : 'var(--warning)'}">
-                                ${api.type === 'primary' ? '✅' : '🟡'} ${api.type === 'primary' ? 'Active' : 'Backup'}
-                            </div>
-                            ${api.name === 'Cloudflare Worker' ? '<div style="font-size: 0.8rem; color: #666;">100K+/day</div>' : ''}
-                        `;
-                    } else {
-                        throw new Error('Server not responding');
-                    }
-                } catch (error) {
+                    const res = await fetch(api.testUrl, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
+                    if (res.ok) {
+                        api.working = true; workingServers++;
+                        serverItem.className = 'server-item server-online';
+                        serverItem.innerHTML = `<strong>${api.name}</strong><div style="color:var(--success)">✅ متصل</div>`;
+                    } else { throw new Error('غير متاح'); }
+                } catch {
                     api.working = false;
                     serverItem.className = 'server-item server-offline';
-                    serverItem.innerHTML = `
-                        <strong>${api.name}</strong>
-                        <div style="color: var(--danger);">❌ Unavailable</div>
-                    `;
+                    serverItem.innerHTML = `<strong>${api.name}</strong><div style="color:var(--danger)">❌ غير متاح</div>`;
                 }
             }
-
-            // Update UI based on results
-            const statusElement = document.querySelector('#apiTest h3');
-            const fetchButton = document.getElementById('fetchBtn');
-            
-            if (workingServers > 0) {
-                statusElement.innerHTML = `✅ Server Status: ${workingServers} Active Servers`;
-                fetchButton.innerHTML = `<span>🚀 Download Video (${workingServers} Active Servers)</span>`;
-            } else {
-                statusElement.innerHTML = `⚠️ Server Status: No Active Servers`;
-                fetchButton.disabled = true;
-                fetchButton.innerHTML = `<span>⏸️ Wait for Servers to Come Back</span>`;
-            }
+            document.querySelector('#apiTest h3').innerHTML =
+                `${workingServers > 0 ? '✅' : '⚠️'} حالة الخوادم: ${workingServers}/${RELIABLE_APIS.length} نشط`;
         }
 
-        // ====== Enhanced Downloader Class with Backup System ======
-        class PracticalTikTokDownloader {
-            constructor() {
-                this.currentVideo = null;
-                this.currentServer = null;
-                this.failedAttempts = 0;
-                this.MAX_ATTEMPTS = 3;
-            }
-
+        /* ====== كلاس التحميل ====== */
+        class ReliableTikTokDownloader {
+            constructor() { this.currentVideo = null; }
             async downloadVideo(videoUrl) {
-                this.failedAttempts = 0;
-                
-                // Try direct APIs first
-                try {
-                    const result = await this.tryDirectAPIs(videoUrl);
-                    if (result && result.success) {
-                        return result;
-                    }
-                } catch (error) {
-                    console.log("Direct APIs failed:", error);
-                    this.failedAttempts++;
+                const workingApis = RELIABLE_APIS.filter(api => api.working);
+                if (!workingApis.length) throw new Error('لا توجد خوادم نشطة حالياً.');
+                for (const api of workingApis) {
+                    try { const res = await this.tryApi(api, videoUrl); if (res && res.success) { this.currentVideo = res.data; return res; } }
+                    catch (e) { console.log(`فشل ${api.name}:`, e.message); continue; }
                 }
-
-                // Show backup option after failures
-                if (this.failedAttempts > 0) {
-                    this.showBackupOption();
-                }
-
-                throw new Error('Failed to download video. Please try the backup downloader.');
+                throw new Error('فشلت جميع الخوادم. تأكد من الرابط وحاول مرة أخرى.');
             }
-
-            async tryDirectAPIs(videoUrl) {
-                const activeServers = WORKING_SERVERS.filter(api => api.working && api.name !== 'Cloudflare Worker');
-                
-                if (activeServers.length === 0) {
-                    throw new Error('No active servers available');
-                }
-
-                console.log(`Trying direct servers: ${activeServers.map(s => s.name).join(', ')}`);
-
-                for (const api of activeServers) {
-                    try {
-                        console.log(`Trying ${api.name}...`);
-                        const result = await this.tryApi(api, videoUrl);
-                        if (result && result.success) {
-                            this.currentVideo = result.data;
-                            this.currentServer = api.name;
-                            return result;
-                        }
-                    } catch (error) {
-                        console.log(`Failed ${api.name}:`, error.message);
-                        this.failedAttempts++;
-                        continue;
-                    }
-                }
-
-                throw new Error('All direct servers failed');
-            }
-
             async tryApi(api, videoUrl) {
                 const controller = new AbortController();
                 const timeout = setTimeout(() => controller.abort(), 10000);
-
                 try {
-                    let response;
-                    
-                    if (api.method === "POST") {
-                        response = await fetch(api.url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                            },
-                            body: JSON.stringify({ url: videoUrl }),
-                            signal: controller.signal
-                        });
+                    let apiUrl;
+                    if (api.name === "TikTok API Direct") {
+                        const videoId = this.extractVideoId(videoUrl);
+                        if (!videoId) throw new Error('رابط غير صالح');
+                        apiUrl = `${api.url}?aweme_id=${videoId}`;
                     } else {
-                        response = await fetch(`${api.url}?url=${encodeURIComponent(videoUrl)}`, {
-                            signal: controller.signal,
-                            headers: {
-                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                                'Accept': 'application/json'
-                            }
-                        });
+                        apiUrl = `${api.url}?url=${encodeURIComponent(videoUrl)}`;
                     }
-
+                    const res = await fetch(apiUrl, {
+                        method: api.method,
+                        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36', 'Accept': 'application/json' },
+                        signal: controller.signal
+                    });
                     clearTimeout(timeout);
-
-                    if (!response.ok) {
-                        throw new Error(`Server Error: ${response.status}`);
-                    }
-
-                    const data = await response.json();
+                    if (!res.ok) throw new Error(`خطأ في الخادم: ${res.status}`);
+                    const data = await res.json();
                     return this.parseApiResponse(api.name, data);
-
-                } catch (error) {
-                    clearTimeout(timeout);
-                    throw error;
-                }
+                } catch (e) { clearTimeout(timeout); throw e; }
             }
-
+            extractVideoId(url) { const m = url.match(/\/video\/(\d+)/); return m ? m[1] : null; }
             parseApiResponse(apiName, data) {
                 switch (apiName) {
-                    case "TikWM":
-                        if (data.code === 0 && data.data) {
-                            let videoUrl = data.data.play;
-                            if (videoUrl && !videoUrl.startsWith('http')) {
-                                videoUrl = 'https:' + videoUrl;
-                            }
-                            
-                            return {
-                                success: true,
-                                data: {
-                                    videoUrl: videoUrl,
-                                    title: data.data.title || "TikTok Video",
-                                    author: data.data.author?.unique_id || "User",
-                                    duration: data.data.duration
-                                }
-                            };
-                        }
+                    case "TikTok API Direct":
+                        if (data.aweme_detail && data.aweme_detail.video)
+                            return { success: true, data: { videoUrl: data.aweme_detail.video.play_addr.url_list[0], title: data.aweme_detail.desc || "فيديو TikTok", author: data.aweme_detail.author?.unique_id || "مستخدم" } };
                         break;
-                        
-                    case "SSSTik":
-                        if (data.url) {
-                            return {
-                                success: true,
-                                data: {
-                                    videoUrl: data.url,
-                                    title: data.title || "TikTok Video",
-                                    author: data.author || "User"
-                                }
-                            };
-                        }
+                    case "TikDown":
+                        if (data.video_url) return { success: true, data: { videoUrl: data.video_url, title: data.title || "فيديو TikTok", author: data.author || "مستخدم" } };
+                        break;
+                    case "TikWM":
+                        if (data.data && data.data.play) return { success: true, data: { videoUrl: data.data.play, title: data.data.title || "فيديو TikTok", author: data.data.author?.unique_id || "مستخدم" } };
+                        break;
+                    case "SnapTik":
+                        if (data.url) return { success: true, data: { videoUrl: data.url, title: data.title || "فيديو TikTok", author: data.author || "مستخدم" } };
+                        break;
+                    case "TikMate":
+                    case "SaveTik":
+                    case "Snapsave":
+                    case "TTDownloader":
+                        if (data.video_url) return { success: true, data: { videoUrl: data.video_url, title: data.title || "فيديو TikTok", author: data.author || "مستخدم" } };
                         break;
                 }
-                
                 return { success: false };
-            }
-
-            showBackupOption() {
-                const backupSection = document.getElementById('backupSection');
-                backupSection.style.display = 'block';
-                
-                // Auto-hide after 10 seconds
-                setTimeout(() => {
-                    backupSection.style.display = 'none';
-                }, 10000);
             }
         }
 
-        // ====== Handle UI ======
-        const downloader = new PracticalTikTokDownloader();
+        /* ====== التعامل مع واجهة المستخدم ====== */
+        const downloader = new ReliableTikTokDownloader();
         const videoUrlInput = document.getElementById('videoUrl');
         const fetchBtn = document.getElementById('fetchBtn');
         const loading = document.getElementById('loading');
@@ -690,73 +296,26 @@
         const videoPreview = document.getElementById('videoPreview');
         const downloadBtn = document.getElementById('downloadBtn');
         const errorMessage = document.getElementById('errorMessage');
-        const backupSection = document.getElementById('backupSection');
 
-        function showError(msg) {
-            errorMessage.textContent = msg;
-            errorMessage.style.display = 'block';
-        }
-
-        function hideError() {
-            errorMessage.style.display = 'none';
-        }
-
-        function showLoading() {
-            loading.style.display = 'block';
-            resultSection.style.display = 'none';
-            backupSection.style.display = 'none';
-        }
-
-        function hideLoading() {
-            loading.style.display = 'none';
-        }
-
+        function showError(msg) { errorMessage.textContent = msg; errorMessage.style.display = 'block'; }
+        function hideError() { errorMessage.style.display = 'none'; }
+        function showLoading() { loading.style.display = 'block'; resultSection.style.display = 'none'; }
+        function hideLoading() { loading.style.display = 'none'; }
         function isValidTikTokUrl(url) {
-            const patterns = [
-                /https?:\/\/(www\.)?tiktok\.com\/.+\/video\/\d+/,
-                /https?:\/\/(vm|vt)\.tiktok\.com\/.+/,
-                /https?:\/\/tiktok\.com\/@.+\/video\/\d+/
-            ];
-            return patterns.some(pattern => pattern.test(url));
+            return /https?:\/\/(www\.)?tiktok\.com\/.+\/video\/\d+/.test(url) ||
+                   /https?:\/\/(vm|vt)\.tiktok\.com\/.+/.test(url);
         }
 
         fetchBtn.addEventListener('click', async () => {
             const url = videoUrlInput.value.trim();
-            
-            if (!url) {
-                showError('Please enter a TikTok video URL');
-                return;
-            }
-            
-            if (!isValidTikTokUrl(url)) {
-                showError('Please enter a valid TikTok URL');
-                return;
-            }
-            
-            hideError();
-            showLoading();
-            fetchBtn.disabled = true;
-            
+            if (!url) return showError('يرجى إدخال رابط فيديو TikTok');
+            if (!isValidTikTokUrl(url)) return showError('يرجى إدخال رابط TikTok صحيح');
+            hideError(); showLoading(); fetchBtn.disabled = true;
             try {
                 const result = await downloader.downloadVideo(url);
                 videoPreview.src = result.data.videoUrl;
-                hideLoading();
-                resultSection.style.display = 'block';
-                
-                // Update page title for better SEO
-                document.title = `Downloaded: ${result.data.title || "TikTok Video"} | TikTok Video Downloader`;
-                
-                // Update meta description
-                const metaDescription = document.querySelector('meta[name="description"]');
-                if (metaDescription && result.data.title) {
-                    metaDescription.content = `Download "${result.data.title}" TikTok video without watermark in MP4 format. Free TikTok video downloader.`;
-                }
-            } catch (error) {
-                hideLoading();
-                showError(error.message);
-            } finally {
-                fetchBtn.disabled = false;
-            }
+                hideLoading(); resultSection.style.display = 'block';
+            } catch (e) { hideLoading(); showError(e.message); } finally { fetchBtn.disabled = false; }
         });
 
         downloadBtn.addEventListener('click', () => {
@@ -764,33 +323,14 @@
                 const a = document.createElement('a');
                 a.href = downloader.currentVideo.videoUrl;
                 a.download = 'tiktok-video.mp4';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
             }
         });
 
-        // ====== Initialize Page ======
+        /* ====== تهيئة الصفحة ====== */
         document.addEventListener('DOMContentLoaded', () => {
             checkServers();
-            
-            // Show sidebar ad only on desktop
-            if (window.innerWidth > 768) {
-                document.getElementById('sidebarAd').style.display = 'block';
-            }
-            
-            // Update server status every 30 seconds
-            setInterval(checkServers, 30000);
-            
-            // Allow Enter key to submit
-            videoUrlInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    fetchBtn.click();
-                }
-            });
-            
-            // Focus on input field
-            videoUrlInput.focus();
+            setInterval(checkServers, 30000); // تحديث كل 30 ثانية
         });
     </script>
 </body>
