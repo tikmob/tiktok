@@ -214,6 +214,16 @@
             border-left: 4px solid var(--info);
         }
         
+        /* Method indicator */
+        .method-indicator {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
         /* Ad spaces */
         .ad-container {
             margin: 25px 0;
@@ -306,15 +316,15 @@
 
         <!-- Backup Section - Always Visible -->
         <div class="backup-section">
-            <h3>🎯 Recommended Method</h3>
-            <p>For best results, use our high-capacity downloader:</p>
-            <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank" 
-               style="display: inline-block; padding: 12px 24px; background: var(--info); color: white; border-radius: 8px; text-decoration: none; margin: 10px 0; font-weight: bold;">
-               🔧 Use Cloudflare Worker (100K+/day)
-            </a>
-            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                Handles 100,000+ requests daily with better reliability and speed.
-            </p>
+            <h3>🎯 Smart Download System</h3>
+            <p>Our system automatically uses the best available method for fast and reliable downloads.</p>
+            <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                <strong>Priority Order:</strong>
+                <ol style="margin: 10px 0; padding-left: 20px;">
+                    <li>Cloudflare Worker (100K+ requests/day)</li>
+                    <li>TikWM Direct API (10K requests/day)</li>
+                </ol>
+            </div>
         </div>
 
         <div class="api-test" id="apiTest">
@@ -330,7 +340,7 @@
             <div id="errorMessage"></div>
             
             <button id="fetchBtn">
-                <span>🚀 Download Video (Direct Method)</span>
+                <span>🚀 Download Video (Auto-Select Best Method)</span>
             </button>
         </section>
 
@@ -341,6 +351,9 @@
 
         <section id="resultSection">
             <h2>✅ Video Downloaded Successfully!</h2>
+            <div class="method-indicator" id="methodUsed">
+                Downloaded via: <strong id="methodName">Cloudflare Worker</strong>
+            </div>
             <video id="videoPreview" controls></video>
             <button id="downloadBtn">📥 Download Video</button>
         </section>
@@ -354,10 +367,10 @@
             <h3>✅ Available Download Methods:</h3>
             <ul style="margin: 15px 0; padding-left: 20px;">
                 <li><strong>Cloudflare Worker</strong> - High Capacity <span class="status-badge status-active">Recommended</span></li>
-                <li><strong>Direct APIs</strong> - Basic Method <span class="status-badge status-backup">Limited</span></li>
+                <li><strong>TikWM Direct API</strong> - Backup Method <span class="status-badge status-backup">Limited</span></li>
             </ul>
             <p style="color: #666; margin-top: 10px;">
-                💡 <strong>Tip:</strong> For reliable downloads, use the <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">Cloudflare Worker</a> which handles CORS issues and provides better performance.
+                💡 <strong>Smart System:</strong> Our downloader automatically selects the best available method for each request, ensuring maximum reliability and speed.
             </p>
         </div>
 
@@ -380,8 +393,8 @@
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔄</div>
-                <h3>High Capacity</h3>
-                <p>Cloudflare Worker ensures 100,000+ requests/day</p>
+                <h3>Auto-Fallback</h3>
+                <p>Automatically switches to backup methods if needed</p>
             </div>
         </div>
 
@@ -390,19 +403,23 @@
             <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
             <div class="faq-item">
                 <div class="faq-question">How to download TikTok videos without watermark?</div>
-                <p>Simply paste the TikTok video URL in the input field above and click the download button. Our tool will remove the watermark automatically.</p>
+                <p>Simply paste the TikTok video URL in the input field above and click the download button. Our smart system will automatically use the best available method to download your video without watermark.</p>
             </div>
             <div class="faq-item">
-                <div class="faq-question">Which method should I use?</div>
-                <p>We recommend using the <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">Cloudflare Worker</a> for best reliability and performance (100,000+ requests daily).</p>
+                <div class="faq-question">Which download method is the best?</div>
+                <p>Our system automatically selects the best method for you. Cloudflare Worker is our primary method (100,000+ requests daily), with TikWM as a reliable backup.</p>
             </div>
             <div class="faq-item">
                 <div class="faq-question">Is this TikTok downloader free?</div>
-                <p>Yes, our TikTok video downloader is completely free to use with no hidden costs.</p>
+                <p>Yes, our TikTok video downloader is completely free to use with no hidden costs or registration required.</p>
             </div>
             <div class="faq-item">
                 <div class="faq-question">What if the download fails?</div>
-                <p>Use our <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">Cloudflare Worker backup</a> which handles CORS issues and provides better reliability.</p>
+                <p>Our system automatically tries multiple methods. If one fails, it immediately switches to the next available option for maximum reliability.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is it legal to download TikTok videos?</div>
+                <p>Downloading TikTok videos for personal use is generally acceptable. However, you should respect copyright and not redistribute content without permission.</p>
             </div>
         </div>
 
@@ -410,74 +427,129 @@
             <p>© 2023 TikTok Video Downloader - Download TikTok Videos Without Watermark</p>
             <p style="margin-top: 10px; font-size: 0.9rem;">
                 This tool helps you download TikTok videos in MP4 format. TikTok is a registered trademark of ByteDance Ltd.
-                <br>High-capacity downloader: <a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank">Cloudflare Worker</a>
+                <br>Powered by smart auto-selection technology for maximum reliability.
             </p>
         </footer>
     </div>
 
     <script>
-        // ====== SIMPLIFIED Server List - Only TikWM ======
-        const WORKING_SERVERS = [
-            {
-                name: "TikWM",
-                url: "https://www.tikwm.com/api/",
-                method: "POST",
-                working: true,
-                priority: 1
-            }
-        ];
-
-        // ====== SIMPLIFIED Server Check ======
-        async function checkServers() {
-            const serverList = document.getElementById('serverList');
-            serverList.innerHTML = '';
-
-            // Always show TikWM as available (it usually works)
-            const serverItem = document.createElement('div');
-            serverItem.className = 'server-item server-online';
-            serverItem.innerHTML = `
-                <strong>TikWM</strong>
-                <div style="color: var(--success);">✅ Usually Works</div>
-                <div style="font-size: 0.8rem; color: #666;">Free tier: 10K requests/day</div>
-            `;
-            serverList.appendChild(serverItem);
-
-            // Show Cloudflare Worker status
-            const workerItem = document.createElement('div');
-            workerItem.className = 'server-item server-online';
-            workerItem.innerHTML = `
-                <strong>Cloudflare Worker</strong>
-                <div style="color: var(--success);">✅ Always Available</div>
-                <div style="font-size: 0.8rem; color: #666;">100K+ requests/day</div>
-            `;
-            serverList.appendChild(workerItem);
-
-            const statusElement = document.querySelector('#apiTest h3');
-            statusElement.innerHTML = `✅ Server Status: TikWM Available`;
-        }
-
-        // ====== SIMPLIFIED Downloader ======
+        // ====== TikTok Downloader with Auto Method Selection ======
         class TikTokDownloader {
             constructor() {
                 this.currentVideo = null;
+                this.workerURL = "https://tikmob.mohammedmila022.workers.dev/";
+                this.downloadStats = {
+                    totalDownloads: 0,
+                    workerSuccess: 0,
+                    tikwmSuccess: 0
+                };
             }
 
             async downloadVideo(videoUrl) {
+                this.downloadStats.totalDownloads++;
+                
+                // Try Cloudflare Worker first (Recommended)
                 try {
-                    console.log("Trying TikWM directly...");
-                    const result = await this.tryTikWM(videoUrl);
-                    
-                    if (result && result.success) {
+                    console.log("🔄 Trying Cloudflare Worker (Primary)...");
+                    const result = await this.tryWorker(videoUrl);
+                    if (result.success) {
                         this.currentVideo = result.data;
-                        return result;
+                        this.downloadStats.workerSuccess++;
+                        return {
+                            ...result,
+                            method: 'worker'
+                        };
                     }
-                    
-                    throw new Error('TikWM failed. Please try the Cloudflare Worker.');
-                    
                 } catch (error) {
-                    console.log("Download failed:", error);
-                    throw new Error('Download failed. Please use the Cloudflare Worker for reliable downloads.');
+                    console.log("❌ Worker failed:", error.message);
                 }
+
+                // If Worker fails, try TikWM
+                try {
+                    console.log("🔄 Trying TikWM (Backup)...");
+                    const result = await this.tryTikWM(videoUrl);
+                    if (result.success) {
+                        this.currentVideo = result.data;
+                        this.downloadStats.tikwmSuccess++;
+                        return {
+                            ...result,
+                            method: 'tikwm'
+                        };
+                    }
+                } catch (error) {
+                    console.log("❌ TikWM failed:", error.message);
+                }
+
+                throw new Error('All download methods failed. Please try again later or use a different TikTok URL.');
+            }
+
+            async tryWorker(videoUrl) {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 15000);
+
+                try {
+                    const response = await fetch(`${this.workerURL}?url=${encodeURIComponent(videoUrl)}`, {
+                        signal: controller.signal,
+                        headers: {
+                            'Accept': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                        }
+                    });
+
+                    clearTimeout(timeout);
+
+                    if (!response.ok) {
+                        throw new Error(`Worker Error: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    if (data.success && data.data && data.data.videoUrl) {
+                        return {
+                            success: true,
+                            data: data.data
+                        };
+                    } else if (data.apis) {
+                        // If worker provides API instructions, use them
+                        return await this.useWorkerInstructions(data.apis, videoUrl);
+                    } else {
+                        throw new Error('Worker: No video data received');
+                    }
+
+                } catch (error) {
+                    clearTimeout(timeout);
+                    throw error;
+                }
+            }
+
+            async useWorkerInstructions(apis, videoUrl) {
+                // Try APIs recommended by the worker
+                for (const api of apis) {
+                    try {
+                        console.log(`Trying ${api.name} based on worker instructions...`);
+                        const response = await fetch(api.url, {
+                            method: api.method,
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                            },
+                            body: JSON.stringify(api.body)
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            const result = this.parseResponse(api.name, data);
+                            if (result.success) {
+                                return result;
+                            }
+                        }
+                    } catch (error) {
+                        console.log(`${api.name} failed:`, error.message);
+                        continue;
+                    }
+                }
+                throw new Error('All Worker recommendations failed');
             }
 
             async tryTikWM(videoUrl) {
@@ -490,6 +562,7 @@
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                         },
                         body: JSON.stringify({ url: videoUrl }),
                         signal: controller.signal
@@ -529,6 +602,59 @@
                     throw error;
                 }
             }
+
+            parseResponse(apiName, data) {
+                if (apiName === "TikWM" && data.code === 0 && data.data) {
+                    let videoUrl = data.data.play;
+                    if (videoUrl && !videoUrl.startsWith('http')) {
+                        videoUrl = 'https:' + videoUrl;
+                    }
+                    return {
+                        success: true,
+                        data: {
+                            videoUrl: videoUrl,
+                            title: data.data.title || "TikTok Video",
+                            author: data.data.author?.unique_id || "User"
+                        }
+                    };
+                }
+                return { success: false };
+            }
+
+            getStats() {
+                return this.downloadStats;
+            }
+        }
+
+        // ====== Server Status Check ======
+        async function checkServers() {
+            const serverList = document.getElementById('serverList');
+            serverList.innerHTML = '';
+
+            // Cloudflare Worker Status
+            const workerItem = document.createElement('div');
+            workerItem.className = 'server-item server-online';
+            workerItem.innerHTML = `
+                <strong>Cloudflare Worker</strong>
+                <div style="color: var(--success);">✅ Primary Method</div>
+                <div style="font-size: 0.8rem; color: #666;">100K+ requests/day</div>
+                <div style="font-size: 0.7rem; color: #888;">Auto-selected first</div>
+            `;
+            serverList.appendChild(workerItem);
+
+            // TikWM Status
+            const tikwmItem = document.createElement('div');
+            tikwmItem.className = 'server-item server-online';
+            tikwmItem.innerHTML = `
+                <strong>TikWM API</strong>
+                <div style="color: var(--success);">✅ Backup Method</div>
+                <div style="font-size: 0.8rem; color: #666;">10K requests/day</div>
+                <div style="font-size: 0.7rem; color: #888;">Auto-fallback</div>
+            `;
+            serverList.appendChild(tikwmItem);
+
+            const statusElement = document.querySelector('#apiTest h3');
+            statusElement.innerHTML = `🔍 System Status: All Methods Available`;
         }
 
         // ====== Handle UI ======
@@ -540,12 +666,16 @@
         const videoPreview = document.getElementById('videoPreview');
         const downloadBtn = document.getElementById('downloadBtn');
         const errorMessage = document.getElementById('errorMessage');
+        const methodName = document.getElementById('methodName');
+        const methodUsed = document.getElementById('methodUsed');
 
         function showError(msg) {
-            errorMessage.innerHTML = msg + '<br><br>' +
-                '<strong>Recommended Solution:</strong> ' +
-                '<a href="https://tikmob.mohammedmila022.workers.dev/" target="_blank" style="color: var(--info);">' +
-                'Use Cloudflare Worker Downloader</a>';
+            errorMessage.innerHTML = `
+                ${msg}
+                <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 5px;">
+                    <strong>💡 Tip:</strong> Try again in a few moments, or use a different TikTok URL.
+                </div>
+            `;
             errorMessage.style.display = 'block';
         }
 
@@ -556,10 +686,15 @@
         function showLoading() {
             loading.style.display = 'block';
             resultSection.style.display = 'none';
+            loadingText.textContent = "Connecting to download service...";
         }
 
         function hideLoading() {
             loading.style.display = 'none';
+        }
+
+        function updateLoadingText(text) {
+            loadingText.textContent = text;
         }
 
         function isValidTikTokUrl(url) {
@@ -580,7 +715,7 @@
             }
             
             if (!isValidTikTokUrl(url)) {
-                showError('Please enter a valid TikTok URL');
+                showError('Please enter a valid TikTok URL. Supported formats:<br>• https://www.tiktok.com/@username/video/1234567890<br>• https://vm.tiktok.com/ABCDEFG/');
                 return;
             }
             
@@ -589,12 +724,30 @@
             fetchBtn.disabled = true;
             
             try {
+                updateLoadingText("Trying Cloudflare Worker...");
                 const result = await downloader.downloadVideo(url);
+                
                 videoPreview.src = result.data.videoUrl;
+                
+                // Show which method was used
+                if (result.method === 'worker') {
+                    methodName.textContent = 'Cloudflare Worker (Primary)';
+                    methodUsed.style.background = '#e8f5e8';
+                } else {
+                    methodName.textContent = 'TikWM API (Backup)';
+                    methodUsed.style.background = '#fff3cd';
+                }
+                
                 hideLoading();
                 resultSection.style.display = 'block';
                 
+                // Update SEO
                 document.title = `Downloaded: ${result.data.title || "TikTok Video"} | TikTok Video Downloader`;
+                
+                const metaDescription = document.querySelector('meta[name="description"]');
+                if (metaDescription && result.data.title) {
+                    metaDescription.content = `Download "${result.data.title}" TikTok video without watermark in MP4 format. Free TikTok video downloader.`;
+                }
                 
             } catch (error) {
                 hideLoading();
@@ -628,6 +781,9 @@
             
             // Focus on input field
             videoUrlInput.focus();
+            
+            // Update loading text element
+            window.loadingText = document.getElementById('loadingText');
         });
     </script>
 </body>
