@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة تحميل TikTok – الإصدار العملي</title>
+    <meta name="description" content="Free TikTok Video Downloader - Download TikTok videos without watermark in MP4 format. Fast, easy and works with all TikTok links.">
+    <meta name="keywords" content="tiktok downloader, tiktok video downloader, tiktok to mp4, download tiktok videos, download tiktok video, tiktok mp4 download, save tiktok video, tiktok download without watermark">
+    <meta name="author" content="TikTok Downloader">
+    <title>TikTok Video Downloader - Download TikTok Videos Without Watermark</title>
     <style>
-        /* نفس الستايل السابق */
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
@@ -13,6 +15,8 @@
             --warning: #ffab00;
             --danger: #ff1744;
             --info: #2979ff;
+            --dark: #121212;
+            --light: #f8f9fa;
         }
         * {
             margin: 0;
@@ -28,7 +32,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -49,6 +53,11 @@
             background-clip: text;
             color: transparent;
         }
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
         .api-test {
             background: #fff3cd;
             padding: 15px;
@@ -68,6 +77,10 @@
             border-radius: 8px;
             text-align: center;
             border: 2px solid #e0e0e0;
+            transition: transform 0.3s ease;
+        }
+        .server-item:hover {
+            transform: translateY(-5px);
         }
         .server-online {
             border-color: var(--success);
@@ -121,6 +134,7 @@
             border-radius: 10px;
             margin: 20px 0;
             background: #000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         button {
             padding: 15px 25px;
@@ -132,10 +146,18 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         #downloadBtn {
             background: var(--success);
@@ -150,58 +172,219 @@
         }
         .status-active { background: var(--success); color: white; }
         .status-backup { background: var(--warning); color: black; }
+        
+        /* Ad spaces */
+        .ad-container {
+            margin: 25px 0;
+            text-align: center;
+        }
+        .ad-banner {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            background: #f0f0f0;
+            margin: 0 auto;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: bold;
+            border: 2px dashed #ccc;
+        }
+        .ad-sidebar {
+            width: 300px;
+            height: 600px;
+            background: #f0f0f0;
+            margin: 0 auto;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: bold;
+            border: 2px dashed #ccc;
+        }
+        
+        /* Features section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* FAQ section */
+        .faq-section {
+            margin: 40px 0;
+        }
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .ad-sidebar {
+                width: 100%;
+                height: 250px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header Banner Ad -->
+        <div class="ad-container">
+            <div class="ad-banner">Advertisement Space (728x90)</div>
+        </div>
+        
         <header>
-            <h1>🚀 أداة تحميل TikTok العملي</h1>
-            <p style="color: #666;">الإصدار الذي يعتمد على الخوادم النشطة فعلياً</p>
+            <h1>🚀 TikTok Video Downloader</h1>
+            <p class="subtitle">Download TikTok videos without watermark in MP4 format</p>
         </header>
 
         <div class="api-test" id="apiTest">
-            <h3>🔍 فحص حالة الخوادم...</h3>
+            <h3>🔍 Checking Server Status...</h3>
             <div class="server-list" id="serverList"></div>
         </div>
 
         <section style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
-            <label for="videoUrl" style="font-weight: bold; color: #333; display: block; margin-bottom: 10px;">أدخل رابط فيديو TikTok:</label>
+            <label for="videoUrl" style="font-weight: bold; color: #333; display: block; margin-bottom: 10px;">Enter TikTok Video URL:</label>
             <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required
                    style="padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; width: 100%; margin-bottom: 10px;">
             
             <div id="errorMessage"></div>
             
             <button id="fetchBtn">
-                <span>🚀 جلب الفيديو (يعمل بـ 3 خوادم نشطة)</span>
+                <span>🚀 Download Video (3 Active Servers)</span>
             </button>
         </section>
 
         <div id="loading">
             <div></div>
-            <p id="loadingText">جاري تحميل الفيديو...</p>
+            <p id="loadingText">Downloading video...</p>
         </div>
 
         <section id="resultSection">
-            <h2>✅ تم تحميل الفيديو بنجاح!</h2>
+            <h2>✅ Video Downloaded Successfully!</h2>
             <video id="videoPreview" controls></video>
-            <button id="downloadBtn">📥 تحميل الفيديو</button>
+            <button id="downloadBtn">📥 Download Video</button>
         </section>
 
+        <!-- Middle Banner Ad -->
+        <div class="ad-container">
+            <div class="ad-banner">Advertisement Space (728x90)</div>
+        </div>
+
         <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <h3>✅ الخوادم النشطة فعلياً:</h3>
-            <ul style="margin: 15px 0; padding-right: 20px;">
-                <li><strong>TikWM</strong> - الخادم الأساسي (نشط) <span class="status-badge status-active">يعمل</span></li>
-                <li><strong>TikFull</strong> - الخادم الاحتياطي (متقطع) <span class="status-badge status-backup">احتياطي</span></li>
-                <li><strong>Cloudflare Worker</strong> - الخادم الذكي <span class="status-badge status-active">مضمون</span></li>
+            <h3>✅ Currently Active Servers:</h3>
+            <ul style="margin: 15px 0; padding-left: 20px;">
+                <li><strong>TikWM</strong> - Primary Server (Active) <span class="status-badge status-active">Working</span></li>
+                <li><strong>TikFull</strong> - Backup Server (Intermittent) <span class="status-badge status-backup">Backup</span></li>
+                <li><strong>Cloudflare Worker</strong> - Smart Server <span class="status-badge status-active">Guaranteed</span></li>
             </ul>
             <p style="color: #666; margin-top: 10px;">
-                💡 <strong>ملاحظة:</strong> معظم الخوادم تتوقف بسبب حماية TikTok، لكن الخوادم الثلاثة أعلاه كافية لتحميل أي فيديو!
+                💡 <strong>Note:</strong> Most servers stop working due to TikTok protection, but the three servers above are enough to download any video!
             </p>
         </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Download</h3>
+                <p>Download TikTok videos quickly without any delays</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>No Watermark</h3>
+                <p>Get clean TikTok videos without any watermark</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Friendly</h3>
+                <p>Works perfectly on all devices and browsers</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Multiple Servers</h3>
+                <p>Multiple backup servers ensure high availability</p>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">How to download TikTok videos without watermark?</div>
+                <p>Simply paste the TikTok video URL in the input field above and click the download button. Our tool will remove the watermark automatically.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is this TikTok downloader free?</div>
+                <p>Yes, our TikTok video downloader is completely free to use with no hidden costs or registration required.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What video formats are supported?</div>
+                <p>Our TikTok downloader supports MP4 format which is compatible with all devices and media players.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is it legal to download TikTok videos?</div>
+                <p>Downloading TikTok videos for personal use is generally acceptable. However, you should respect copyright and not redistribute content without permission.</p>
+            </div>
+        </div>
+
+        <!-- Sidebar Ad (for desktop) -->
+        <div class="ad-container" style="display: none;" id="sidebarAd">
+            <div class="ad-sidebar">Advertisement Space (300x600)</div>
+        </div>
+
+        <footer>
+            <p>© 2023 TikTok Video Downloader - Download TikTok Videos Without Watermark</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                This tool helps you download TikTok videos in MP4 format. TikTok is a registered trademark of ByteDance Ltd.
+            </p>
+        </footer>
     </div>
 
     <script>
-        // ====== قائمة الخوادم المحدثة بناءً على النتائج الفعلية ======
+        // ====== Updated Server List Based on Actual Results ======
         const WORKING_SERVERS = [
             {
                 name: "TikWM",
@@ -250,7 +433,7 @@
             }
         ];
 
-        // ====== فحص حالة الخوادم ======
+        // ====== Check Server Status ======
         async function checkServers() {
             const serverList = document.getElementById('serverList');
             serverList.innerHTML = '';
@@ -260,11 +443,11 @@
             for (const api of WORKING_SERVERS) {
                 const serverItem = document.createElement('div');
                 serverItem.className = 'server-item';
-                serverItem.innerHTML = `<strong>${api.name}</strong><div>🔍 جاري الفحص...</div>`;
+                serverItem.innerHTML = `<strong>${api.name}</strong><div>🔍 Checking...</div>`;
                 serverList.appendChild(serverItem);
 
                 try {
-                    // اختبار أبسط وأسرع
+                    // Simpler and faster test
                     const response = await fetch(api.testUrl, { 
                         method: 'GET',
                         signal: AbortSignal.timeout(3000)
@@ -277,7 +460,7 @@
                         serverItem.innerHTML = `
                             <strong>${api.name}</strong>
                             <div style="color: ${api.type === 'primary' ? 'var(--success)' : 'var(--warning)'}">
-                                ${api.type === 'primary' ? '✅' : '🟡'} ${api.type === 'primary' ? 'نشط' : 'متقطع'}
+                                ${api.type === 'primary' ? '✅' : '🟡'} ${api.type === 'primary' ? 'Active' : 'Intermittent'}
                             </div>
                         `;
                     } else {
@@ -288,26 +471,26 @@
                     serverItem.className = 'server-item server-offline';
                     serverItem.innerHTML = `
                         <strong>${api.name}</strong>
-                        <div style="color: var(--danger);">❌ غير متاح</div>
+                        <div style="color: var(--danger);">❌ Unavailable</div>
                     `;
                 }
             }
 
-            // تحديث واجهة المستخدم بناءً على النتائج
+            // Update UI based on results
             const statusElement = document.querySelector('#apiTest h3');
             const fetchButton = document.getElementById('fetchBtn');
             
             if (workingServers > 0) {
-                statusElement.innerHTML = `✅ حالة الخوادم: ${workingServers} خادم نشط`;
-                fetchButton.innerHTML = `<span>🚀 جلب الفيديو (${workingServers} خوادم نشطة)</span>`;
+                statusElement.innerHTML = `✅ Server Status: ${workingServers} Active Servers`;
+                fetchButton.innerHTML = `<span>🚀 Download Video (${workingServers} Active Servers)</span>`;
             } else {
-                statusElement.innerHTML = `⚠️ حالة الخوادم: لا توجد خوادم نشطة`;
+                statusElement.innerHTML = `⚠️ Server Status: No Active Servers`;
                 fetchButton.disabled = true;
-                fetchButton.innerHTML = `<span>⏸️ انتظر حتى تعود الخوادم</span>`;
+                fetchButton.innerHTML = `<span>⏸️ Wait for Servers to Come Back</span>`;
             }
         }
 
-        // ====== كلاس التحميل العملي ======
+        // ====== Practical Downloader Class ======
         class PracticalTikTokDownloader {
             constructor() {
                 this.currentVideo = null;
@@ -315,23 +498,23 @@
             }
 
             async downloadVideo(videoUrl) {
-                // الخوادم النشطة فقط
+                // Active servers only
                 const activeServers = WORKING_SERVERS.filter(api => api.working);
                 
                 if (activeServers.length === 0) {
-                    // إذا لم توجد خوادم نشطة، نجرب TikWM مباشرة (غالباً يعمل)
+                    // If no active servers, try TikWM directly (usually works)
                     try {
                         return await this.tryTikWMDirectly(videoUrl);
                     } catch (error) {
-                        throw new Error('لا توجد خوادم نشطة حالياً. يرجى المحاولة لاحقاً.');
+                        throw new Error('No active servers at the moment. Please try again later.');
                     }
                 }
 
-                console.log(`الخوادم النشطة: ${activeServers.map(s => s.name).join(', ')}`);
+                console.log(`Active Servers: ${activeServers.map(s => s.name).join(', ')}`);
 
                 for (const api of activeServers) {
                     try {
-                        console.log(`جرب ${api.name}...`);
+                        console.log(`Trying ${api.name}...`);
                         const result = await this.tryApi(api, videoUrl);
                         if (result && result.success) {
                             this.currentVideo = result.data;
@@ -339,14 +522,14 @@
                             return result;
                         }
                     } catch (error) {
-                        console.log(`فشل ${api.name}:`, error.message);
+                        console.log(`Failed ${api.name}:`, error.message);
                         continue;
                     }
                 }
 
-                // إذا فشلت جميع الخوادم النشطة، نجرب TikWM كحل أخير
+                // If all active servers fail, try TikWM as a last resort
                 try {
-                    console.log("جرب TikWM مباشرة كحل أخير...");
+                    console.log("Trying TikWM directly as last resort...");
                     const result = await this.tryTikWMDirectly(videoUrl);
                     if (result && result.success) {
                         this.currentVideo = result.data;
@@ -354,10 +537,10 @@
                         return result;
                     }
                 } catch (finalError) {
-                    console.log("فشل TikWM المباشر:", finalError);
+                    console.log("TikWM direct failed:", finalError);
                 }
 
-                throw new Error('فشل في تحميل الفيديو. تأكد من الرابط وحاول مرة أخرى.');
+                throw new Error('Failed to download video. Please check the URL and try again.');
             }
 
             async tryApi(api, videoUrl) {
@@ -389,7 +572,7 @@
                     clearTimeout(timeout);
 
                     if (!response.ok) {
-                        throw new Error(`خطأ في الخادم: ${response.status}`);
+                        throw new Error(`Server Error: ${response.status}`);
                     }
 
                     const data = await response.json();
@@ -401,7 +584,7 @@
                 }
             }
 
-            // طريقة مباشرة لـ TikWM (غالباً تعمل)
+            // Direct method for TikWM (usually works)
             async tryTikWMDirectly(videoUrl) {
                 const controller = new AbortController();
                 const timeout = setTimeout(() => controller.abort(), 10000);
@@ -420,7 +603,7 @@
                     clearTimeout(timeout);
 
                     if (!response.ok) {
-                        throw new Error(`خطأ في TikWM: ${response.status}`);
+                        throw new Error(`TikWM Error: ${response.status}`);
                     }
 
                     const data = await response.json();
@@ -437,7 +620,7 @@
                     case "TikWM":
                         if (data.code === 0 && data.data) {
                             let videoUrl = data.data.play;
-                            // إصلاح الرابط إذا needed
+                            // Fix URL if needed
                             if (videoUrl && !videoUrl.startsWith('http')) {
                                 videoUrl = 'https:' + videoUrl;
                             }
@@ -446,8 +629,8 @@
                                 success: true,
                                 data: {
                                     videoUrl: videoUrl,
-                                    title: data.data.title || "فيديو TikTok",
-                                    author: data.data.author?.unique_id || "مستخدم",
+                                    title: data.data.title || "TikTok Video",
+                                    author: data.data.author?.unique_id || "User",
                                     duration: data.data.duration
                                 }
                             };
@@ -462,8 +645,8 @@
                                 success: true,
                                 data: {
                                     videoUrl: data.video_url || data.url,
-                                    title: data.title || "فيديو TikTok",
-                                    author: data.author || "مستخدم"
+                                    title: data.title || "TikTok Video",
+                                    author: data.author || "User"
                                 }
                             };
                         }
@@ -483,7 +666,7 @@
             }
         }
 
-        // ====== التعامل مع واجهة المستخدم ======
+        // ====== Handle UI ======
         const downloader = new PracticalTikTokDownloader();
         const videoUrlInput = document.getElementById('videoUrl');
         const fetchBtn = document.getElementById('fetchBtn');
@@ -524,12 +707,12 @@
             const url = videoUrlInput.value.trim();
             
             if (!url) {
-                showError('يرجى إدخال رابط فيديو TikTok');
+                showError('Please enter a TikTok video URL');
                 return;
             }
             
             if (!isValidTikTokUrl(url)) {
-                showError('يرجى إدخال رابط TikTok صحيح');
+                showError('Please enter a valid TikTok URL');
                 return;
             }
             
@@ -542,6 +725,15 @@
                 videoPreview.src = result.data.videoUrl;
                 hideLoading();
                 resultSection.style.display = 'block';
+                
+                // Update page title for better SEO
+                document.title = `Downloaded: ${result.data.title || "TikTok Video"} | TikTok Video Downloader`;
+                
+                // Update meta description
+                const metaDescription = document.querySelector('meta[name="description"]');
+                if (metaDescription && result.data.title) {
+                    metaDescription.content = `Download "${result.data.title}" TikTok video without watermark in MP4 format. Free TikTok video downloader.`;
+                }
             } catch (error) {
                 hideLoading();
                 showError(error.message);
@@ -561,19 +753,27 @@
             }
         });
 
-        // ====== تهيئة الصفحة ======
+        // ====== Initialize Page ======
         document.addEventListener('DOMContentLoaded', () => {
             checkServers();
             
-            // تحديث حالة الخوادم كل 20 ثانية
+            // Show sidebar ad only on desktop
+            if (window.innerWidth > 768) {
+                document.getElementById('sidebarAd').style.display = 'block';
+            }
+            
+            // Update server status every 20 seconds
             setInterval(checkServers, 20000);
             
-            // السماح بالدخول باستخدام Enter
+            // Allow Enter key to submit
             videoUrlInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     fetchBtn.click();
                 }
             });
+            
+            // Focus on input field
+            videoUrlInput.focus();
         });
     </script>
 </body>
