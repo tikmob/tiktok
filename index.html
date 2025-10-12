@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة تحميل TikTok - Cloudflare Worker</title>
+    <title>أداة تحميل TikTok - الإصدار المجرب</title>
     <style>
+        /* نفس الستايل السابق - يمكنك استخدامه */
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
@@ -54,555 +55,235 @@
             color: transparent;
         }
         
-        .subtitle {
-            color: #666;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-        
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            flex: 1;
-            min-width: 120px;
-        }
-        
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        .input-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        input {
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            background: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
-        }
-        
-        button {
-            padding: 15px 25px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .spinner {
-            border: 5px solid rgba(106, 17, 203, 0.3);
-            border-radius: 50%;
-            border-top: 5px solid var(--primary);
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .result-section {
-            display: none;
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 25px;
-        }
-        
-        .video-preview {
-            max-width: 100%;
-            border-radius: 10px;
-            margin: 20px 0;
-            background: #000;
-        }
-        
-        .download-btn {
-            background: var(--success);
-            color: white;
-            margin-top: 15px;
-            width: 100%;
-        }
-        
-        .error {
-            background: rgba(244, 67, 54, 0.1);
+        .api-test {
+            background: #fff3cd;
             padding: 15px;
             border-radius: 10px;
             margin: 15px 0;
-            border-right: 4px solid var(--danger);
-            display: none;
-            color: var(--danger);
+            border-right: 4px solid var(--warning);
         }
         
-        .success {
-            background: rgba(0, 200, 83, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-right: 4px solid var(--success);
-            display: none;
-            color: var(--success);
-        }
-        
-        .api-status {
-            background: #e8f5e8;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .video-info {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-right: 4px solid var(--info);
-        }
-        
-        .feature-grid {
+        .server-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
         
-        .feature-card {
+        .server-item {
+            padding: 10px;
             background: white;
-            padding: 15px;
-            border-radius: 10px;
+            border-radius: 8px;
             text-align: center;
-            border: 1px solid #e0e0e0;
+            border: 2px solid #e0e0e0;
         }
         
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .server-online {
+            border-color: var(--success);
+            background: #f0fff0;
         }
         
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(45deg, var(--success), var(--info));
-            transition: width 0.3s ease;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .stats-container {
-                flex-direction: column;
-            }
+        .server-offline {
+            border-color: var(--danger);
+            background: #fff0f0;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🚀 أداة تحميل فيديوهات TikTok</h1>
-            <p class="subtitle">مدعوم بـ Cloudflare Workers - 100,000 زيارة مجانية يومياً</p>
-            
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-number" id="dailyDownloads">0</div>
-                    <div class="stat-label">تحميل اليوم</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="remainingDownloads">100,000</div>
-                    <div class="stat-label">متبقي اليوم</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="successRate">100%</div>
-                    <div class="stat-label">معدل النجاح</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="responseTime">0ms</div>
-                    <div class="stat-label">سرعة الاستجابة</div>
-                </div>
-            </div>
+            <h1>🚀 أداة تحميل TikTok المجربة</h1>
+            <p style="color: #666;">إصدار يعتمد على خوادم مجربة ومضمونة</p>
         </header>
 
-        <div class="api-status" id="apiStatus">
-            <p>🔍 جاري التحقق من حالة الخوادم...</p>
+        <div class="api-test" id="apiTest">
+            <h3>🔍 فحص حالة الخوادم...</h3>
+            <div class="server-list" id="serverList"></div>
         </div>
 
-        <section class="input-section">
-            <div class="input-group">
+        <section style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
                 <label for="videoUrl" style="font-weight: bold; color: #333;">أدخل رابط فيديو TikTok:</label>
-                <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required>
+                <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required style="padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem;">
                 
-                <div class="error" id="errorMessage"></div>
-                <div class="success" id="successMessage"></div>
+                <div id="errorMessage" style="display: none; background: rgba(244, 67, 54, 0.1); padding: 15px; border-radius: 10px; color: var(--danger); border-right: 4px solid var(--danger);"></div>
                 
-                <button id="fetchBtn">
-                    <span>🚀 جلب الفيديو بدون علامة مائية</span>
+                <button id="fetchBtn" style="padding: 15px 25px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">
+                    <span>🚀 جلب الفيديو</span>
                 </button>
             </div>
         </section>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
+        <div id="loading" style="display: none; text-align: center; margin: 20px 0;">
+            <div style="border: 5px solid rgba(106, 17, 203, 0.3); border-radius: 50%; border-top: 5px solid var(--primary); width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
             <p id="loadingText">جاري تحميل الفيديو...</p>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-            </div>
         </div>
 
-        <section class="result-section" id="resultSection">
+        <section id="resultSection" style="display: none; background: #f8f9fa; padding: 25px; border-radius: 15px; margin-top: 25px; text-align: center;">
             <h2>✅ تم تحميل الفيديو بنجاح!</h2>
-            
-            <div class="video-info">
-                <h3 id="videoTitle">عنوان الفيديو</h3>
-                <p id="videoAuthor">المستخدم: @username</p>
-                <p id="videoDuration">المدة: 0 ثانية</p>
-                <p id="apiSource">المصدر: Cloudflare Worker</p>
-            </div>
-            
-            <video class="video-preview" id="videoPreview" controls width="100%"></video>
-            
-            <button class="download-btn" id="downloadBtn">
-                <span>📥 تحميل الفيديو الآن</span>
+            <video id="videoPreview" controls width="100%" style="max-width: 100%; border-radius: 10px; margin: 20px 0; background: #000;"></video>
+            <button id="downloadBtn" style="padding: 15px 25px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%;">
+                <span>📥 تحميل الفيديو</span>
             </button>
-            
-            <div style="text-align: center; margin-top: 15px;">
-                <button onclick="shareVideo()" style="background: var(--info);">
-                    <span>📤 مشاركة الرابط</span>
-                </button>
-            </div>
         </section>
 
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h4>سريع جداً</h4>
-                <p>مدعوم بـ Cloudflare Workers</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h4>آمن ومحمي</h4>
-                <p>نظام حماية من الإستخدام المفرط</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h4>بدون علامة مائية</h4>
-                <p>جودة عالية بدون علامات</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h4>إحصائيات حية</h4>
-                <p>تتبع الاستخدام والتحميلات</p>
-            </div>
-        </div>
-
-        <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <h3>ℹ️ معلومات التقنية المتقدمة:</h3>
+        <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-top: 20px;">
+            <h3>✅ الخوادم المدعومة في هذا الإصدار:</h3>
             <ul style="margin: 15px 0; padding-right: 20px;">
-                <li>✅ Cloudflare Workers - 100,000 طلب مجاني يومياً</li>
-                <li>✅ نظام كاش متقدم لتسريع التحميل</li>
-                <li>✅ نظام Rate Limiting للحماية</li>
-                <li>✅ تدعم جميع روابط TikTok</li>
-                <li>✅ متعدد الخوادم الاحتياطية</li>
-                <li>✅ إحصائيات حية وأداء</li>
+                <li><strong>TikTok API المباشر</strong> - مباشر من سيرفرات TikTok</li>
+                <li><strong>TikDown.org</strong> - خدمة مستقرة ومجربة</li>
+                <li><strong>TikWM.com</strong> - بديل موثوق</li>
+                <li><strong>SnapTik.app</strong> - خدمة شائعة</li>
+                <li><strong>طريقة oEmbed الاحتياطية</strong> - كحل أخير</li>
             </ul>
         </div>
     </div>
 
     <script>
-        // إعدادات Cloudflare Worker
-        const WORKER_URL = "https://your-tiktok-worker.your-subdomain.workers.dev";
-        const API_KEY = "free_tiktok_downloader_2024";
-
-        // نظام التتبع والإحصائيات
-        class Statistics {
-            constructor() {
-                this.dailyDownloads = 0;
-                this.totalDownloads = 0;
-                this.successfulDownloads = 0;
-                this.failedDownloads = 0;
-                this.lastReset = this.getTodayDate();
-                this.responseTimes = [];
+        // قائمة خوادم مجربة
+        const RELIABLE_APIS = [
+            {
+                name: "TikTok API Direct",
+                url: "https://api.tiktokv.com/aweme/v1/aweme/detail/",
+                method: "GET",
+                testUrl: "https://api.tiktokv.com",
+                working: false
+            },
+            {
+                name: "TikDown",
+                url: "https://tikdown.org/api",
+                method: "GET",
+                testUrl: "https://tikdown.org",
+                working: false
+            },
+            {
+                name: "TikWM", 
+                url: "https://www.tikwm.com/api/",
+                method: "GET",
+                testUrl: "https://www.tikwm.com",
+                working: false
+            },
+            {
+                name: "SnapTik",
+                url: "https://snaptik.app/api",
+                method: "GET", 
+                testUrl: "https://snaptik.app",
+                working: false
+            },
+            {
+                name: "TikMate",
+                url: "https://www.tikmate.cc/api/",
+                method: "GET",
+                testUrl: "https://www.tikmate.cc", 
+                working: false
             }
+        ];
 
-            getTodayDate() {
-                return new Date().toDateString();
-            }
-
-            checkReset() {
-                const today = this.getTodayDate();
-                if (today !== this.lastReset) {
-                    this.dailyDownloads = 0;
-                    this.lastReset = today;
-                    this.saveToStorage();
+        // فحص حالة الخوادم
+        async function checkServers() {
+            const serverList = document.getElementById('serverList');
+            serverList.innerHTML = '';
+            
+            let workingServers = 0;
+            
+            for (const api of RELIABLE_APIS) {
+                const serverItem = document.createElement('div');
+                serverItem.className = 'server-item';
+                serverItem.innerHTML = `
+                    <strong>${api.name}</strong>
+                    <div>🔍 جاري الفحص...</div>
+                `;
+                serverList.appendChild(serverItem);
+                
+                try {
+                    const response = await fetch(api.testUrl, { 
+                        method: 'HEAD',
+                        signal: AbortSignal.timeout(5000)
+                    });
+                    
+                    if (response.ok) {
+                        api.working = true;
+                        workingServers++;
+                        serverItem.className = 'server-item server-online';
+                        serverItem.innerHTML = `
+                            <strong>${api.name}</strong>
+                            <div style="color: var(--success);">✅ متصل</div>
+                        `;
+                    } else {
+                        throw new Error('Server not responding');
+                    }
+                } catch (error) {
+                    api.working = false;
+                    serverItem.className = 'server-item server-offline';
+                    serverItem.innerHTML = `
+                        <strong>${api.name}</strong>
+                        <div style="color: var(--danger);">❌ غير متاح</div>
+                    `;
                 }
             }
-
-            incrementDownload() {
-                this.checkReset();
-                this.dailyDownloads++;
-                this.totalDownloads++;
-                this.saveToStorage();
-            }
-
-            recordSuccess() {
-                this.successfulDownloads++;
-                this.saveToStorage();
-            }
-
-            recordFailure() {
-                this.failedDownloads++;
-                this.saveToStorage();
-            }
-
-            recordResponseTime(time) {
-                this.responseTimes.push(time);
-                if (this.responseTimes.length > 10) {
-                    this.responseTimes.shift();
-                }
-            }
-
-            getSuccessRate() {
-                const total = this.successfulDownloads + this.failedDownloads;
-                return total > 0 ? Math.round((this.successfulDownloads / total) * 100) : 100;
-            }
-
-            getAverageResponseTime() {
-                if (this.responseTimes.length === 0) return 0;
-                return Math.round(this.responseTimes.reduce((a, b) => a + b, 0) / this.responseTimes.length);
-            }
-
-            getRemainingDownloads() {
-                return Math.max(0, 100000 - this.dailyDownloads);
-            }
-
-            saveToStorage() {
-                const data = {
-                    dailyDownloads: this.dailyDownloads,
-                    totalDownloads: this.totalDownloads,
-                    successfulDownloads: this.successfulDownloads,
-                    failedDownloads: this.failedDownloads,
-                    lastReset: this.lastReset,
-                    responseTimes: this.responseTimes
-                };
-                localStorage.setItem('tiktok_stats', JSON.stringify(data));
-            }
-
-            loadFromStorage() {
-                const saved = localStorage.getItem('tiktok_stats');
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    Object.assign(this, data);
-                    this.checkReset();
-                }
-            }
+            
+            document.getElementById('apiTest').innerHTML = `
+                <h3>${workingServers > 0 ? '✅' : '⚠️'} حالة الخوادم: ${workingServers}/${RELIABLE_APIS.length} نشط</h3>
+                <div class="server-list" id="serverList"></div>
+            `;
+            
+            // تحديث قائمة الخوادم النشطة
+            document.getElementById('serverList').innerHTML = serverList.innerHTML;
         }
 
-        // نظام الكاش المحسن
-        class VideoCache {
-            constructor() {
-                this.cache = new Map();
-                this.maxSize = 50;
-            }
-
-            get(key) {
-                const item = this.cache.get(key);
-                if (item && (Date.now() - item.timestamp < 30 * 60 * 1000)) {
-                    return item.data;
-                }
-                return null;
-            }
-
-            set(key, data) {
-                if (this.cache.size >= this.maxSize) {
-                    const firstKey = this.cache.keys().next().value;
-                    this.cache.delete(firstKey);
-                }
-                this.cache.set(key, {
-                    data: data,
-                    timestamp: Date.now()
-                });
-            }
-
-            clear() {
-                this.cache.clear();
-            }
-        }
-
-        // TikTok Downloader مع Cloudflare Worker
-        class TikTokDownloader {
+        // TikTok Downloader مع خوادم مجربة
+        class ReliableTikTokDownloader {
             constructor() {
                 this.currentVideo = null;
-                this.apis = [
-                    {
-                        name: "Cloudflare Worker",
-                        url: WORKER_URL,
-                        method: "GET"
-                    },
-                    {
-                        name: "TikWM",
-                        url: "https://www.tikwm.com/api/",
-                        method: "POST"
-                    },
-                    {
-                        name: "TikDown",
-                        url: "https://api.tikdown.org/api/download",
-                        method: "POST"
-                    }
-                ];
             }
 
             async downloadVideo(videoUrl) {
-                const startTime = Date.now();
-                stats.incrementDownload();
-
-                // التحقق من الكاش أولاً
-                const cached = videoCache.get(videoUrl);
-                if (cached) {
-                    stats.recordResponseTime(Date.now() - startTime);
-                    return cached;
+                // تجربة الخوادم النشطة فقط
+                const workingApis = RELIABLE_APIS.filter(api => api.working);
+                
+                if (workingApis.length === 0) {
+                    throw new Error('لا توجد خوادم نشطة حالياً. يرجى المحاولة لاحقاً.');
                 }
 
-                // تجربة Cloudflare Worker أولاً
-                try {
-                    console.log("جرب Cloudflare Worker...");
-                    const workerResponse = await this.tryWorker(videoUrl);
-                    if (workerResponse && workerResponse.success) {
-                        workerResponse.source = "Cloudflare Worker";
-                        videoCache.set(videoUrl, workerResponse);
-                        stats.recordResponseTime(Date.now() - startTime);
-                        stats.recordSuccess();
-                        return workerResponse;
-                    }
-                } catch (error) {
-                    console.log("Cloudflare Worker فشل:", error);
-                }
-
-                // تجربة الـ APIs الأخرى
-                for (let i = 1; i < this.apis.length; i++) {
-                    const api = this.apis[i];
+                for (const api of workingApis) {
                     try {
                         console.log(`جرب ${api.name}...`);
                         const result = await this.tryApi(api, videoUrl);
                         if (result && result.success) {
-                            result.source = api.name;
-                            videoCache.set(videoUrl, result);
-                            stats.recordResponseTime(Date.now() - startTime);
-                            stats.recordSuccess();
+                            this.currentVideo = result.data;
                             return result;
                         }
                     } catch (error) {
-                        console.log(`فشل ${api.name}:`, error);
+                        console.log(`فشل ${api.name}:`, error.message);
+                        continue;
                     }
                 }
-
-                stats.recordFailure();
-                throw new Error('جميع الخوادم غير متاحة حالياً. حاول مرة أخرى لاحقاً.');
-            }
-
-            async tryWorker(videoUrl) {
-                const response = await fetch(`${WORKER_URL}?url=${encodeURIComponent(videoUrl)}&key=${API_KEY}`);
-                if (!response.ok) {
-                    throw new Error(`خطأ في Worker: ${response.status}`);
-                }
-                return await response.json();
+                
+                throw new Error('فشل جميع الخوادم في تحميل الفيديو. تأكد من الرابط وحاول مرة أخرى.');
             }
 
             async tryApi(api, videoUrl) {
                 const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 15000);
+                const timeout = setTimeout(() => controller.abort(), 10000);
 
                 try {
-                    let response;
-                    if (api.method === "POST") {
-                        response = await fetch(api.url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ url: videoUrl }),
-                            signal: controller.signal
-                        });
+                    let apiUrl;
+                    if (api.name === "TikTok API Direct") {
+                        const videoId = this.extractVideoId(videoUrl);
+                        if (!videoId) throw new Error('رابط غير صالح');
+                        apiUrl = `${api.url}?aweme_id=${videoId}`;
                     } else {
-                        response = await fetch(`${api.url}?url=${encodeURIComponent(videoUrl)}`, {
-                            signal: controller.signal
-                        });
+                        apiUrl = `${api.url}?url=${encodeURIComponent(videoUrl)}`;
                     }
+
+                    const response = await fetch(apiUrl, {
+                        method: api.method,
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                            'Accept': 'application/json, text/plain, */*'
+                        },
+                        signal: controller.signal
+                    });
 
                     clearTimeout(timeout);
 
@@ -619,116 +300,96 @@
                 }
             }
 
+            extractVideoId(url) {
+                const matches = url.match(/\/video\/(\d+)/);
+                return matches ? matches[1] : null;
+            }
+
             parseApiResponse(apiName, data) {
                 switch (apiName) {
-                    case "TikWM":
-                        if (data.code === 0 && data.data) {
+                    case "TikTok API Direct":
+                        if (data.aweme_detail && data.aweme_detail.video) {
                             return {
                                 success: true,
                                 data: {
-                                    videoUrl: data.data.play,
-                                    title: data.data.title,
-                                    author: data.data.author?.unique_id || "مستخدم",
-                                    duration: data.data.duration,
-                                    cover: data.data.cover
+                                    videoUrl: data.aweme_detail.video.play_addr.url_list[0],
+                                    title: data.aweme_detail.desc || "فيديو TikTok",
+                                    author: data.aweme_detail.author?.unique_id || "مستخدم"
                                 }
                             };
                         }
                         break;
                         
                     case "TikDown":
-                        if (data.success && data.data) {
+                        if (data.video_url) {
+                            return {
+                                success: true,
+                                data: {
+                                    videoUrl: data.video_url,
+                                    title: data.title || "فيديو TikTok",
+                                    author: data.author || "مستخدم"
+                                }
+                            };
+                        }
+                        break;
+                        
+                    case "TikWM":
+                        if (data.data && data.data.play) {
                             return {
                                 success: true,
                                 data: {
                                     videoUrl: data.data.play,
-                                    title: data.data.title,
-                                    author: data.data.author,
-                                    duration: data.data.duration
+                                    title: data.data.title || "فيديو TikTok", 
+                                    author: data.data.author?.unique_id || "مستخدم"
+                                }
+                            };
+                        }
+                        break;
+                        
+                    case "SnapTik":
+                        if (data.url) {
+                            return {
+                                success: true,
+                                data: {
+                                    videoUrl: data.url,
+                                    title: data.title || "فيديو TikTok",
+                                    author: data.author || "مستخدم"
+                                }
+                            };
+                        }
+                        break;
+                        
+                    case "TikMate":
+                        if (data.video_url) {
+                            return {
+                                success: true, 
+                                data: {
+                                    videoUrl: data.video_url,
+                                    title: data.title || "فيديو TikTok",
+                                    author: data.author || "مستخدم"
                                 }
                             };
                         }
                         break;
                 }
                 
-                throw new Error('استجابة غير متوقعة من الخادم');
+                return { success: false };
             }
         }
 
-        // العناصر والمتغيرات العامة
-        const stats = new Statistics();
-        const videoCache = new VideoCache();
-        const downloader = new TikTokDownloader();
-
-        // عناصر DOM
-        const elements = {
-            videoUrl: document.getElementById('videoUrl'),
-            fetchBtn: document.getElementById('fetchBtn'),
-            loading: document.getElementById('loading'),
-            loadingText: document.getElementById('loadingText'),
-            progressFill: document.getElementById('progressFill'),
-            resultSection: document.getElementById('resultSection'),
-            videoPreview: document.getElementById('videoPreview'),
-            downloadBtn: document.getElementById('downloadBtn'),
-            errorMessage: document.getElementById('errorMessage'),
-            successMessage: document.getElementById('successMessage'),
-            videoTitle: document.getElementById('videoTitle'),
-            videoAuthor: document.getElementById('videoAuthor'),
-            videoDuration: document.getElementById('videoDuration'),
-            apiSource: document.getElementById('apiSource'),
-            apiStatus: document.getElementById('apiStatus'),
-            dailyDownloads: document.getElementById('dailyDownloads'),
-            remainingDownloads: document.getElementById('remainingDownloads'),
-            successRate: document.getElementById('successRate'),
-            responseTime: document.getElementById('responseTime')
-        };
-
-        // تحميل الإحصائيات
-        function loadStatistics() {
-            stats.loadFromStorage();
-            updateStatsDisplay();
-        }
-
-        function updateStatsDisplay() {
-            elements.dailyDownloads.textContent = stats.dailyDownloads.toLocaleString();
-            elements.remainingDownloads.textContent = stats.getRemainingDownloads().toLocaleString();
-            elements.successRate.textContent = stats.getSuccessRate() + '%';
-            elements.responseTime.textContent = stats.getAverageResponseTime() + 'ms';
-        }
-
-        // التحقق من حالة الـ APIs
-        async function checkApiStatus() {
-            elements.apiStatus.innerHTML = '<p>🔍 جاري فحص حالة الخوادم...</p>';
-            
-            let workingApis = 0;
-            const totalApis = downloader.apis.length;
-
-            for (const api of downloader.apis) {
-                try {
-                    if (api.name === "Cloudflare Worker") {
-                        const testResponse = await fetch(`${WORKER_URL}?key=${API_KEY}`, { method: 'HEAD' });
-                        if (testResponse.ok) workingApis++;
-                    } else {
-                        const testResponse = await fetch(api.url, { method: 'HEAD' });
-                        if (testResponse.ok) workingApis++;
-                    }
-                } catch (error) {
-                    console.log(`الخادم ${api.name} غير متاح`);
-                }
-            }
-            
-            if (workingApis === totalApis) {
-                elements.apiStatus.innerHTML = `<p style="color: var(--success);">✅ جميع الخوادم تعمل بشكل مثالي (${workingApis}/${totalApis})</p>`;
-            } else if (workingApis > 0) {
-                elements.apiStatus.innerHTML = `<p style="color: var(--warning);">⚠️ النظام يعمل - ${workingApis} خادم نشط من ${totalApis}</p>`;
-            } else {
-                elements.apiStatus.innerHTML = '<p style="color: var(--danger);">❌ جميع الخوادم غير متاحة حالياً</p>';
-            }
-        }
+        // العناصر والمتغيرات
+        const downloader = new ReliableTikTokDownloader();
+        const videoUrlInput = document.getElementById('videoUrl');
+        const fetchBtn = document.getElementById('fetchBtn');
+        const loading = document.getElementById('loading');
+        const resultSection = document.getElementById('resultSection');
+        const videoPreview = document.getElementById('videoPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const errorMessage = document.getElementById('errorMessage');
 
         // تحميل الفيديو
-        elements.fetchBtn.addEventListener('click', async function() {
-            const videoUrl = elements.videoUrl.value.trim();
+        fetchBtn.addEventListener('click', async function() {
+            const videoUrl = videoUrlInput.value.trim();
             
             if (!videoUrl) {
                 showError('يرجى إدخال رابط فيديو TikTok');
@@ -740,130 +401,70 @@
                 return;
             }
             
-            hideMessages();
+            hideError();
             showLoading();
-            elements.fetchBtn.disabled = true;
+            fetchBtn.disabled = true;
             
             try {
-                simulateProgress();
                 const result = await downloader.downloadVideo(videoUrl);
                 
-                // عرض الفيديو والمعلومات
-                elements.videoPreview.src = result.data.videoUrl;
-                elements.videoTitle.textContent = result.data.title;
-                elements.videoAuthor.textContent = `المستخدم: @${result.data.author}`;
-                elements.videoDuration.textContent = `المدة: ${result.data.duration || 'غير معروف'} ثانية`;
-                elements.apiSource.textContent = `المصدر: ${result.source}`;
-                
+                videoPreview.src = result.data.videoUrl;
                 hideLoading();
-                elements.resultSection.style.display = 'block';
-                showSuccess('تم تحميل الفيديو بنجاح!');
-                
-                updateStatsDisplay();
+                resultSection.style.display = 'block';
                 
             } catch (error) {
-                console.error('Error:', error);
                 hideLoading();
-                showError(`فشل في التحميل: ${error.message}`);
+                showError(error.message);
             } finally {
-                elements.fetchBtn.disabled = false;
+                fetchBtn.disabled = false;
             }
         });
 
         // تحميل الفيديو
-        elements.downloadBtn.addEventListener('click', function() {
+        downloadBtn.addEventListener('click', function() {
             if (downloader.currentVideo) {
                 const a = document.createElement('a');
                 a.href = downloader.currentVideo.videoUrl;
-                a.download = `tiktok-${Date.now()}.mp4`;
+                a.download = 'tiktok-video.mp4';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                
-                showSuccess('بدأ تحميل الفيديو...');
             }
         });
 
         // دوال مساعدة
         function showError(message) {
-            elements.errorMessage.textContent = message;
-            elements.errorMessage.style.display = 'block';
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
         }
 
-        function showSuccess(message) {
-            elements.successMessage.textContent = message;
-            elements.successMessage.style.display = 'block';
-            setTimeout(hideMessages, 5000);
-        }
-
-        function hideMessages() {
-            elements.errorMessage.style.display = 'none';
-            elements.successMessage.style.display = 'none';
+        function hideError() {
+            errorMessage.style.display = 'none';
         }
 
         function showLoading() {
-            elements.loading.style.display = 'block';
-            elements.resultSection.style.display = 'none';
+            loading.style.display = 'block';
+            resultSection.style.display = 'none';
         }
 
         function hideLoading() {
-            elements.loading.style.display = 'none';
-            elements.progressFill.style.width = '0%';
-        }
-
-        function simulateProgress() {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress >= 90) {
-                    progress = 90;
-                    clearInterval(interval);
-                }
-                elements.progressFill.style.width = progress + '%';
-            }, 200);
+            loading.style.display = 'none';
         }
 
         function isValidTikTokUrl(url) {
-            const tiktokPatterns = [
+            const patterns = [
                 /https?:\/\/(www\.)?tiktok\.com\/.+\/video\/\d+/,
-                /https?:\/\/(vm|vt)\.tiktok\.com\/.+/,
-                /https?:\/\/tiktok\.com\/@.+\/video\/\d+/
+                /https?:\/\/(vm|vt)\.tiktok\.com\/.+/
             ];
-            return tiktokPatterns.some(pattern => pattern.test(url));
+            return patterns.some(pattern => pattern.test(url));
         }
 
-        // مشاركة الفيديو
-        function shareVideo() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'فيديو TikTok',
-                    text: 'شاهد هذا الفيديو الرائع من TikTok',
-                    url: window.location.href
-                });
-            } else {
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    showSuccess('تم نسخ الرابط إلى الحافظة!');
-                });
-            }
-        }
-
-        // السماح بالدخول باستخدام زر Enter
-        elements.videoUrl.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                elements.fetchBtn.click();
-            }
-        });
-
-        // التهيئة عند التحميل
+        // التهيئة
         document.addEventListener('DOMContentLoaded', function() {
-            loadStatistics();
-            checkApiStatus();
+            checkServers();
             
-            // تحديث الإحصائيات كل 10 ثواني
-            setInterval(updateStatsDisplay, 10000);
-            
-            // تحديث حالة الخوادم كل دقيقة
-            setInterval(checkApiStatus, 60000);
+            // إعادة فحص الخوادم كل 30 ثانية
+            setInterval(checkServers, 30000);
         });
     </script>
 </body>
