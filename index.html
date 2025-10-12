@@ -1,276 +1,127 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة تحميل TikTok - الإصدار المحسن</title>
-    <style>
-        /* نفس الأنماط السابقة - يمكنك إعادة استخدامها */
-        :root {
-            --primary: #6a11cb;
-            --secondary: #2575fc;
-            --success: #00c853;
-            --warning: #ffab00;
-            --danger: #ff1744;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            color: #333;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .api-status {
-            background: #fff3cd;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
-        }
-        
-        .input-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        input {
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            background: white;
-            font-size: 1rem;
-        }
-        
-        button {
-            padding: 15px 25px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .spinner {
-            border: 5px solid rgba(106, 17, 203, 0.3);
-            border-radius: 50%;
-            border-top: 5px solid var(--primary);
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .result-section {
-            display: none;
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 25px;
-            text-align: center;
-        }
-        
-        .video-preview {
-            max-width: 100%;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        
-        .error {
-            background: rgba(244, 67, 54, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-right: 4px solid var(--danger);
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TikTok Downloader – No Watermark</title>
+  <style>
+    :root {
+      --primary: #6a11cb;
+      --secondary: #2575fc;
+      --success: #00c853;
+      --error: #ff1744;
+      --glass: rgba(255, 255, 255, 0.85);
+      --radius: 14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+    body{background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .card{width:100%;max-width:560px;background:var(--glass);backdrop-filter:blur(10px);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.2);padding:30px;color:#333}
+    h1{text-align:center;font-size:1.7rem;background:linear-gradient(45deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    p.sub{text-align:center;font-size:.9rem;opacity:.8;margin-bottom:25px}
+    label{font-weight:600;margin-bottom:8px;display:block}
+    input{width:100%;padding:14px;border:2px solid #ddd;border-radius:var(--radius);font-size:1rem;transition:border .3s}
+    input:focus{outline:none;border-color:var(--primary)}
+    button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:var(--radius);font-size:1.05rem;font-weight:600;color:#fff;background:linear-gradient(45deg,var(--primary),var(--secondary));cursor:pointer;transition:transform .2s}
+    button:hover{transform:translateY(-2px)}
+    button:disabled{background:#bbb;cursor:not-allowed;transform:none}
+    .loading{text-align:center;margin:20px 0;display:none}
+    .spinner{width:40px;height:40px;border:4px solid rgba(255,255,255,.3);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px}
+    @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+    .result{display:none;margin-top:25px}
+    video{width:100%;border-radius:var(--radius);margin-bottom:12px}
+    .meta{background:#f5f5f5;padding:12px;border-radius:var(--radius);font-size:.9rem;margin-bottom:12px}
+    .error{color:var(--error);font-weight:600;margin-top:10px;display:none}
+    footer{text-align:center;margin-top:25px;font-size:.8rem;opacity:.7}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>أداة تحميل TikTok</h1>
-            <p>الإصدار المحسن مع واجهات متعددة</p>
-        </header>
+  <div class="card">
+    <h1>TikTok Downloader</h1>
+    <p class="sub">HD video &nbsp;•&nbsp; No watermark &nbsp;•&nbsp; Unlimited</p>
 
-        <div class="api-status" id="apiStatus">
-            <p>🔄 جاري اختبار واجهات TikTok...</p>
-        </div>
+    <label for="url">Paste TikTok video URL:</label>
+    <input type="url" id="url" placeholder="https://www.tiktok.com/@user/video/1234567890">
 
-        <section class="input-section">
-            <div class="input-group">
-                <label for="videoUrl">أدخل رابط فيديو TikTok:</label>
-                <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required>
-                <div class="error" id="errorMessage"></div>
-                <button id="fetchBtn">🚀 تحميل الفيديو</button>
-            </div>
-        </section>
+    <button id="getBtn">Get Video</button>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>جاري البحث في جميع الواجهات المتاحة...</p>
-        </div>
-
-        <section class="result-section" id="resultSection">
-            <h2>✅ تم العثور على الفيديو</h2>
-            <div id="videoInfo"></div>
-            <video class="video-preview" id="videoPreview" controls></video>
-            <button id="downloadBtn">📥 تحميل الفيديو</button>
-        </section>
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div>Processing…</div>
     </div>
 
-    <script>
-        const CLOUDFLARE_WORKER_URL = 'https://tikmob.mohammedmila022.workers.dev';
+    <div class="error" id="errorBox"></div>
 
-        // عناصر DOM
-        const videoUrlInput = document.getElementById('videoUrl');
-        const fetchBtn = document.getElementById('fetchBtn');
-        const loading = document.getElementById('loading');
-        const resultSection = document.getElementById('resultSection');
-        const videoPreview = document.getElementById('videoPreview');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const errorMessage = document.getElementById('errorMessage');
-        const videoInfo = document.getElementById('videoInfo');
-        const apiStatus = document.getElementById('apiStatus');
+    <div class="result" id="result">
+      <div class="meta">
+        <div id="metaTitle"></div>
+        <div id="metaAuthor"></div>
+      </div>
+      <video id="preview" controls></video>
+      <button id="dlBtn" class="btn" style="background:linear-gradient(45deg,var(--success),#66bb6a)">Download MP4 (no watermark)</button>
+    </div>
 
-        // اختبار واجهات TikTok
-        async function testAPIs() {
-            const testUrl = 'https://www.tiktok.com/@tiktok/video/7305166444562353441';
-            let workingAPIs = 0;
-            
-            try {
-                const response = await fetch(`${CLOUDFLARE_WORKER_URL}?url=${encodeURIComponent(testUrl)}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    workingAPIs = 1;
-                    apiStatus.innerHTML = `<p style="color: var(--success);">✅ الواجهات تعمل بشكل جيد</p>`;
-                } else {
-                    apiStatus.innerHTML = `<p style="color: var(--warning);">⚠️ بعض الواجهات قد لا تعمل</p>`;
-                }
-            } catch (error) {
-                apiStatus.innerHTML = `<p style="color: var(--danger);">❌ مشكلة في الاتصال</p>`;
-            }
-        }
+    <footer>Free for personal use • Respect creators' rights</footer>
+  </div>
 
-        // تحميل الفيديو
-        fetchBtn.addEventListener('click', async function() {
-            const videoUrl = videoUrlInput.value.trim();
-            
-            if (!videoUrl) {
-                showError('يرجى إدخال رابط فيديو TikTok');
-                return;
-            }
-            
-            hideError();
-            loading.style.display = 'block';
-            resultSection.style.display = 'none';
-            fetchBtn.disabled = true;
-            
-            try {
-                const response = await fetch(`${CLOUDFLARE_WORKER_URL}?url=${encodeURIComponent(videoUrl)}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    videoPreview.src = result.data.videoUrl;
-                    videoInfo.innerHTML = `
-                        <h3>${result.data.title}</h3>
-                        <p>المستخدم: @${result.data.author}</p>
-                        ${result.data.note ? `<p style="color: var(--warning);"><small>${result.data.note}</small></p>` : ''}
-                    `;
-                    
-                    loading.style.display = 'none';
-                    resultSection.style.display = 'block';
-                } else {
-                    throw new Error(result.error);
-                }
-                
-            } catch (error) {
-                showError(`فشل في التحميل: ${error.message}`);
-            } finally {
-                fetchBtn.disabled = false;
-            }
-        });
+  <script>
+    const API = 'https://tikmob.mohammedmila022.workers.dev'; // <<< your worker
 
-        // دوال مساعدة
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            loading.style.display = 'none';
-        }
+    const $ = id => document.getElementById(id);
+    const urlInp = $('url'), getBtn = $('getBtn'), loading = $('loading'), errorBox = $('errorBox');
+    const result = $('result'), preview = $('preview'), dlBtn = $('dlBtn');
+    const metaTitle = $('metaTitle'), metaAuthor = $('metaAuthor');
 
-        function hideError() {
-            errorMessage.style.display = 'none';
-        }
+    let downloadLink = '';
 
-        // تحميل الفيديو
-        downloadBtn.addEventListener('click', function() {
-            if (videoPreview.src) {
-                const a = document.createElement('a');
-                a.href = videoPreview.src;
-                a.download = 'tiktok-video.mp4';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            }
-        });
+    getBtn.addEventListener('click', fetchVideo);
+    dlBtn.addEventListener('click', () => {
+      if (!downloadLink) return;
+      const a = document.createElement('a');
+      a.href = downloadLink;
+      a.download = 'tiktok-no-wm.mp4';
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+    urlInp.addEventListener('keyup', e => { if (e.key === 'Enter') fetchVideo(); });
 
-        // اختبار الواجهات عند التحميل
-        document.addEventListener('DOMContentLoaded', testAPIs);
-    </script>
+    async function fetchVideo() {
+      const url = urlInp.value.trim();
+      if (!url) return flash('Please enter a TikTok URL.');
+      if (!url.includes('tiktok.com')) return flash('Invalid TikTok URL.');
+
+      hideError(); setState('load');
+
+      try {
+        const res = await fetch(`${API}?url=${encodeURIComponent(url)}`);
+        if (!res.ok) throw new Error('Network error ' + res.status);
+        const json = await res.json();
+        if (json.error) throw new Error(json.error);
+
+        downloadLink = json.hd;
+        preview.src = json.hd;
+        metaTitle.textContent = json.title;
+        metaAuthor.textContent = 'Author: ' + json.author;
+
+        setState('result');
+      } catch (e) {
+        flash(e.message);
+        setState('idle');
+      }
+    }
+
+    function setState(st) {
+      loading.style.display = st === 'load' ? 'block' : 'none';
+      getBtn.disabled = st === 'load';
+      result.style.display = st === 'result' ? 'block' : 'none';
+    }
+    function flash(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+      setTimeout(() => errorBox.style.display = 'none', 4000);
+    }
+    function hideError() { errorBox.style.display = 'none'; }
+
+    // auto-focus input on load
+    urlInp.focus();
+  </script>
 </body>
 </html>
