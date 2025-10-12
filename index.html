@@ -141,43 +141,67 @@
 
     <script>
         // قائمة خوادم مجربة
-        const RELIABLE_APIS = [
-            {
-                name: "TikTok API Direct",
-                url: "https://api.tiktokv.com/aweme/v1/aweme/detail/",
-                method: "GET",
-                testUrl: "https://api.tiktokv.com",
-                working: false
-            },
-            {
-                name: "TikDown",
-                url: "https://tikdown.org/api",
-                method: "GET",
-                testUrl: "https://tikdown.org",
-                working: false
-            },
-            {
-                name: "TikWM", 
-                url: "https://www.tikwm.com/api/",
-                method: "GET",
-                testUrl: "https://www.tikwm.com",
-                working: false
-            },
-            {
-                name: "SnapTik",
-                url: "https://snaptik.app/api",
-                method: "GET", 
-                testUrl: "https://snaptik.app",
-                working: false
-            },
-            {
-                name: "TikMate",
-                url: "https://www.tikmate.cc/api/",
-                method: "GET",
-                testUrl: "https://www.tikmate.cc", 
-                working: false
-            }
-        ];
+        // قائمة خوادم مجربة
+const RELIABLE_APIS = [
+    {
+        name: "TikTok API Direct",
+        url: "https://api.tiktokv.com/aweme/v1/aweme/detail/",
+        method: "GET",
+        testUrl: "https://api.tiktokv.com",
+        working: false
+    },
+    {
+        name: "TikDown",
+        url: "https://tikdown.org/api",
+        method: "GET",
+        testUrl: "https://tikdown.org",
+        working: false
+    },
+    {
+        name: "TikWM", 
+        url: "https://www.tikwm.com/api/",
+        method: "GET",
+        testUrl: "https://www.tikwm.com",
+        working: false
+    },
+    {
+        name: "SnapTik",
+        url: "https://snaptik.app/api",
+        method: "GET", 
+        testUrl: "https://snaptik.app",
+        working: false
+    },
+    {
+        name: "TikMate",
+        url: "https://www.tikmate.cc/api/",
+        method: "GET",
+        testUrl: "https://www.tikmate.cc", 
+        working: false
+    },
+
+    // 🟢 خوادم جديدة أكثر استقراراً وأداءً
+    {
+        name: "SaveTik",
+        url: "https://api.savetik.app/api/info",
+        method: "GET",
+        testUrl: "https://api.savetik.app",
+        working: false
+    },
+    {
+        name: "Snapsave",
+        url: "https://snapsave.io/tiktok-downloader",
+        method: "GET",
+        testUrl: "https://snapsave.io",
+        working: false
+    },
+    {
+        name: "TTDownloader",
+        url: "https://ttdownloader.com/req/",
+        method: "GET",
+        testUrl: "https://ttdownloader.com",
+        working: false
+    }
+];
 
         // فحص حالة الخوادم
         async function checkServers() {
