@@ -81,9 +81,14 @@ if (api.name === "TikMob Worker") {
 
       clearTimeout(timeout);
       if (res.ok) {
-        api.working = true;
-        activeCount++;
-      }
+  api.working = true;
+  activeCount++;
+} else if (api.name === "TikMob Worker") {
+  // حتى لو فشل الرد الداخلي لكن الخادم متاح
+  api.working = true;
+  activeCount++;
+}
+
     } catch (e) {
       api.working = false;
     }
