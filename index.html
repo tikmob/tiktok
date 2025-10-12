@@ -71,10 +71,13 @@ async function checkServers() {
       const timeout = setTimeout(() => controller.abort(), 5000);
       let res;
 if (api.name === "TikMob Worker") {
-  res = await fetch(api.testUrl, { method: "GET", signal: controller.signal });
+  // نجرب الاتصال بخادمك عبر رابط اختبار فعلي
+  const testLink = api.testUrl + "?url=https://www.tiktok.com/@scout2015/video/6718335390845095173";
+  res = await fetch(testLink, { method: "GET", signal: controller.signal });
 } else {
   res = await fetch(api.testUrl, { method: "HEAD", signal: controller.signal });
 }
+
 
       clearTimeout(timeout);
       if (res.ok) {
