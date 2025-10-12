@@ -438,23 +438,15 @@
             constructor() {
                 this.currentVideo = null;
                 this.workerURL = "https://tikmob.mohammedmila022.workers.dev/";
-                this.downloadStats = {
-                    totalDownloads: 0,
-                    workerSuccess: 0,
-                    tikwmSuccess: 0
-                };
             }
 
             async downloadVideo(videoUrl) {
-                this.downloadStats.totalDownloads++;
-                
                 // Try Cloudflare Worker first (Recommended)
                 try {
                     console.log("🔄 Trying Cloudflare Worker (Primary)...");
                     const result = await this.tryWorker(videoUrl);
                     if (result.success) {
                         this.currentVideo = result.data;
-                        this.downloadStats.workerSuccess++;
                         return {
                             ...result,
                             method: 'worker'
@@ -470,7 +462,6 @@
                     const result = await this.tryTikWM(videoUrl);
                     if (result.success) {
                         this.currentVideo = result.data;
-                        this.downloadStats.tikwmSuccess++;
                         return {
                             ...result,
                             method: 'tikwm'
@@ -503,15 +494,28 @@
                     }
 
                     const data = await response.json();
+                    console.log("Worker response:", data);
                     
+                    // Handle different response formats from Worker
                     if (data.success && data.data && data.data.videoUrl) {
+                        // Format 1: Direct video URL
                         return {
                             success: true,
                             data: data.data
                         };
-                    } else if (data.apis) {
-                        // If worker provides API instructions, use them
+                    } else if (data.apis && Array.isArray(data.apis)) {
+                        // Format 2: Worker provides API instructions
                         return await this.useWorkerInstructions(data.apis, videoUrl);
+                    } else if (data.videoUrl || data.url) {
+                        // Format 3: Direct video URL in root
+                        return {
+                            success: true,
+                            data: {
+                                videoUrl: data.videoUrl || data.url,
+                                title: data.title || "TikTok Video",
+                                author: data.author || "User"
+                            }
+                        };
                     } else {
                         throw new Error('Worker: No video data received');
                     }
@@ -527,19 +531,31 @@
                 for (const api of apis) {
                     try {
                         console.log(`Trying ${api.name} based on worker instructions...`);
-                        const response = await fetch(api.url, {
-                            method: api.method,
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-                            },
-                            body: JSON.stringify(api.body)
-                        });
+                        let response;
+                        
+                        if (api.method === "POST") {
+                            response = await fetch(api.url, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                                },
+                                body: JSON.stringify(api.body || { url: videoUrl })
+                            });
+                        } else {
+                            response = await fetch(`${api.url}?url=${encodeURIComponent(videoUrl)}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                                }
+                            });
+                        }
 
                         if (response.ok) {
                             const data = await response.json();
-                            const result = this.parseResponse(api.name, data);
+                            const result = this.parseAPIResponse(api.name, data);
                             if (result.success) {
                                 return result;
                             }
@@ -603,26 +619,52 @@
                 }
             }
 
-            parseResponse(apiName, data) {
-                if (apiName === "TikWM" && data.code === 0 && data.data) {
-                    let videoUrl = data.data.play;
-                    if (videoUrl && !videoUrl.startsWith('http')) {
-                        videoUrl = 'https:' + videoUrl;
-                    }
-                    return {
-                        success: true,
-                        data: {
-                            videoUrl: videoUrl,
-                            title: data.data.title || "TikTok Video",
-                            author: data.data.author?.unique_id || "User"
+            parseAPIResponse(apiName, data) {
+                switch (apiName) {
+                    case "TikWM":
+                        if (data.code === 0 && data.data && data.data.play) {
+                            let videoUrl = data.data.play;
+                            if (videoUrl && !videoUrl.startsWith('http')) {
+                                videoUrl = 'https:' + videoUrl;
+                            }
+                            return {
+                                success: true,
+                                data: {
+                                    videoUrl: videoUrl,
+                                    title: data.data.title || "TikTok Video",
+                                    author: data.data.author?.unique_id || "User"
+                                }
+                            };
                         }
-                    };
+                        break;
+                        
+                    case "SSSTik":
+                        if (data.url) {
+                            return {
+                                success: true,
+                                data: {
+                                    videoUrl: data.url,
+                                    title: data.title || "TikTok Video",
+                                    author: data.author || "User"
+                                }
+                            };
+                        }
+                        break;
+                        
+                    default:
+                        if (data.video_url || data.url) {
+                            return {
+                                success: true,
+                                data: {
+                                    videoUrl: data.video_url || data.url,
+                                    title: data.title || "TikTok Video",
+                                    author: data.author || "User"
+                                }
+                            };
+                        }
                 }
+                
                 return { success: false };
-            }
-
-            getStats() {
-                return this.downloadStats;
             }
         }
 
