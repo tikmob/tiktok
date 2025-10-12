@@ -1,127 +1,374 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TikTok Downloader – No Watermark</title>
-  <style>
-    :root {
-      --primary: #6a11cb;
-      --secondary: #2575fc;
-      --success: #00c853;
-      --error: #ff1744;
-      --glass: rgba(255, 255, 255, 0.85);
-      --radius: 14px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-    body{background:linear-gradient(135deg,var(--primary),var(--secondary));min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-    .card{width:100%;max-width:560px;background:var(--glass);backdrop-filter:blur(10px);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.2);padding:30px;color:#333}
-    h1{text-align:center;font-size:1.7rem;background:linear-gradient(45deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    p.sub{text-align:center;font-size:.9rem;opacity:.8;margin-bottom:25px}
-    label{font-weight:600;margin-bottom:8px;display:block}
-    input{width:100%;padding:14px;border:2px solid #ddd;border-radius:var(--radius);font-size:1rem;transition:border .3s}
-    input:focus{outline:none;border-color:var(--primary)}
-    button{width:100%;padding:14px;margin-top:12px;border:none;border-radius:var(--radius);font-size:1.05rem;font-weight:600;color:#fff;background:linear-gradient(45deg,var(--primary),var(--secondary));cursor:pointer;transition:transform .2s}
-    button:hover{transform:translateY(-2px)}
-    button:disabled{background:#bbb;cursor:not-allowed;transform:none}
-    .loading{text-align:center;margin:20px 0;display:none}
-    .spinner{width:40px;height:40px;border:4px solid rgba(255,255,255,.3);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px}
-    @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-    .result{display:none;margin-top:25px}
-    video{width:100%;border-radius:var(--radius);margin-bottom:12px}
-    .meta{background:#f5f5f5;padding:12px;border-radius:var(--radius);font-size:.9rem;margin-bottom:12px}
-    .error{color:var(--error);font-weight:600;margin-top:10px;display:none}
-    footer{text-align:center;margin-top:25px;font-size:.8rem;opacity:.7}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تحميل TikTok - نظام محاكاة متقدم</title>
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --success: #00c853;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .demo-notice {
+            background: #fff3cd;
+            border: 2px solid #ff9800;
+            color: #856404;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        input {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+        }
+        
+        button {
+            padding: 15px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(106, 17, 203, 0.3);
+            border-radius: 50%;
+            border-top: 5px solid var(--primary);
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result-section {
+            display: none;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            text-align: center;
+        }
+        
+        .video-preview {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            background: #000;
+        }
+        
+        .video-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: right;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .stat {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .demo-links {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .demo-link {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        .demo-link:hover {
+            background: #f0f0f0;
+            border-color: var(--primary);
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1>TikTok Downloader</h1>
-    <p class="sub">HD video &nbsp;•&nbsp; No watermark &nbsp;•&nbsp; Unlimited</p>
+    <div class="container">
+        <header>
+            <h1>🔄 نظام محاكاة تحميل TikTok</h1>
+            <p style="color: #666;">نموذج توضيحي متقدم للمشروع الجامعي</p>
+        </header>
 
-    <label for="url">Paste TikTok video URL:</label>
-    <input type="url" id="url" placeholder="https://www.tiktok.com/@user/video/1234567890">
+        <div class="demo-notice">
+            <h3>📝 ملاحظة هامة:</h3>
+            <p>هذا <strong>نموذج محاكاة</strong> يوضح كيفية عمل أداة تحميل TikTok.</p>
+            <p>في التطبيق الحقيقي، سيتم الاتصال بخوادم TikTok الفعلية.</p>
+        </div>
 
-    <button id="getBtn">Get Video</button>
+        <div class="demo-links">
+            <h3>🎯 اختر رابط تجريبي:</h3>
+            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@tiktok/video/7305166444562353441')">
+                🐘 فيديو تجريبي 1 - أحلام الفيلة
+            </div>
+            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@user1/video/7155834725374676226')">
+                🔥 فيديو تجريبي 2 - مغامرة مثيرة
+            </div>
+            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@user2/video/6958453274562768130')">
+                🏃 فيديو تجريبي 3 - هروب كبير
+            </div>
+            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@username/video/1234567890123456789')">
+                🎬 فيديو تجريبي 4 - عشوائي
+            </div>
+        </div>
 
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      <div>Processing…</div>
+        <section class="input-section">
+            <div class="input-group">
+                <label for="videoUrl" style="font-weight: bold;">أو أدخل رابط TikTok خاص بك:</label>
+                <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required>
+                <button id="fetchBtn">
+                    <span>🚀 محاكاة التحميل</span>
+                </button>
+            </div>
+        </section>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>جاري محاكاة عملية التحميل...</p>
+            <p><small>يتم إنشاء بيانات واقعية للعرض التوضيحي</small></p>
+        </div>
+
+        <section class="result-section" id="resultSection">
+            <h2>✅ تمت المحاكاة بنجاح!</h2>
+            
+            <div class="video-info">
+                <h3 id="videoTitle">عنوان الفيديو</h3>
+                <p id="videoAuthor">المستخدم: @username</p>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number" id="viewsCount">0</div>
+                        <div>المشاهدات</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="likesCount">0</div>
+                        <div>الإعجابات</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="sharesCount">0</div>
+                        <div>المشاركات</div>
+                    </div>
+                </div>
+                
+                <div style="background: #e8f5e8; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                    <p style="color: #2e7d32; margin: 0;">
+                        <small>🎯 هذا عرض توضيحي - البيانات مُنشأة للاختبار</small>
+                    </p>
+                </div>
+            </div>
+            
+            <video class="video-preview" id="videoPreview" controls></video>
+            <button id="downloadBtn" style="background: var(--success);">
+                <span>📥 تحميل الفيديو التجريبي</span>
+            </button>
+        </section>
     </div>
 
-    <div class="error" id="errorBox"></div>
+    <script>
+        const CLOUDFLARE_WORKER_URL = 'https://tikmob.mohammedmila022.workers.dev';
 
-    <div class="result" id="result">
-      <div class="meta">
-        <div id="metaTitle"></div>
-        <div id="metaAuthor"></div>
-      </div>
-      <video id="preview" controls></video>
-      <button id="dlBtn" class="btn" style="background:linear-gradient(45deg,var(--success),#66bb6a)">Download MP4 (no watermark)</button>
-    </div>
+        // عناصر DOM
+        const videoUrlInput = document.getElementById('videoUrl');
+        const fetchBtn = document.getElementById('fetchBtn');
+        const loading = document.getElementById('loading');
+        const resultSection = document.getElementById('resultSection');
+        const videoPreview = document.getElementById('videoPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const videoTitle = document.getElementById('videoTitle');
+        const videoAuthor = document.getElementById('videoAuthor');
+        const viewsCount = document.getElementById('viewsCount');
+        const likesCount = document.getElementById('likesCount');
+        const sharesCount = document.getElementById('sharesCount');
 
-    <footer>Free for personal use • Respect creators' rights</footer>
-  </div>
+        // استخدام رابط تجريبي
+        function useDemoLink(url) {
+            videoUrlInput.value = url;
+        }
 
-  <script>
-    const API = 'https://tikmob.mohammedmila022.workers.dev'; // <<< your worker
+        // تحميل الفيديو
+        fetchBtn.addEventListener('click', async function() {
+            const videoUrl = videoUrlInput.value.trim();
+            
+            if (!videoUrl) {
+                alert('يرجى إدخال رابط فيديو TikTok');
+                return;
+            }
+            
+            if (!isValidTikTokUrl(videoUrl)) {
+                alert('يرجى إدخال رابط TikTok صحيح');
+                return;
+            }
+            
+            loading.style.display = 'block';
+            resultSection.style.display = 'none';
+            fetchBtn.disabled = true;
+            
+            try {
+                // محاكاة وقت التحميل
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const response = await fetch(`${CLOUDFLARE_WORKER_URL}?url=${encodeURIComponent(videoUrl)}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    // عرض البيانات
+                    videoPreview.src = result.data.videoUrl;
+                    videoTitle.textContent = result.data.title;
+                    videoAuthor.textContent = `المستخدم: @${result.data.author}`;
+                    viewsCount.textContent = result.data.play_count?.toLocaleString() || '0';
+                    likesCount.textContent = result.data.digg_count?.toLocaleString() || '0';
+                    sharesCount.textContent = result.data.share_count?.toLocaleString() || '0';
+                    
+                    loading.style.display = 'none';
+                    resultSection.style.display = 'block';
+                } else {
+                    throw new Error(result.error);
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`فشل في المحاكاة: ${error.message}`);
+            } finally {
+                fetchBtn.disabled = false;
+            }
+        });
 
-    const $ = id => document.getElementById(id);
-    const urlInp = $('url'), getBtn = $('getBtn'), loading = $('loading'), errorBox = $('errorBox');
-    const result = $('result'), preview = $('preview'), dlBtn = $('dlBtn');
-    const metaTitle = $('metaTitle'), metaAuthor = $('metaAuthor');
+        // تحميل الفيديو
+        downloadBtn.addEventListener('click', function() {
+            if (videoPreview.src) {
+                const a = document.createElement('a');
+                a.href = videoPreview.src;
+                a.download = 'tiktok-demo-video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
 
-    let downloadLink = '';
+        // التحقق من رابط TikTok
+        function isValidTikTokUrl(url) {
+            const tiktokPattern = /https?:\/\/(www\.)?tiktok\.com\/.+\/video\/\d+/;
+            return tiktokPattern.test(url);
+        }
 
-    getBtn.addEventListener('click', fetchVideo);
-    dlBtn.addEventListener('click', () => {
-      if (!downloadLink) return;
-      const a = document.createElement('a');
-      a.href = downloadLink;
-      a.download = 'tiktok-no-wm.mp4';
-      document.body.appendChild(a); a.click(); a.remove();
-    });
-    urlInp.addEventListener('keyup', e => { if (e.key === 'Enter') fetchVideo(); });
-
-    async function fetchVideo() {
-      const url = urlInp.value.trim();
-      if (!url) return flash('Please enter a TikTok URL.');
-      if (!url.includes('tiktok.com')) return flash('Invalid TikTok URL.');
-
-      hideError(); setState('load');
-
-      try {
-        const res = await fetch(`${API}?url=${encodeURIComponent(url)}`);
-        if (!res.ok) throw new Error('Network error ' + res.status);
-        const json = await res.json();
-        if (json.error) throw new Error(json.error);
-
-        downloadLink = json.hd;
-        preview.src = json.hd;
-        metaTitle.textContent = json.title;
-        metaAuthor.textContent = 'Author: ' + json.author;
-
-        setState('result');
-      } catch (e) {
-        flash(e.message);
-        setState('idle');
-      }
-    }
-
-    function setState(st) {
-      loading.style.display = st === 'load' ? 'block' : 'none';
-      getBtn.disabled = st === 'load';
-      result.style.display = st === 'result' ? 'block' : 'none';
-    }
-    function flash(msg) {
-      errorBox.textContent = msg;
-      errorBox.style.display = 'block';
-      setTimeout(() => errorBox.style.display = 'none', 4000);
-    }
-    function hideError() { errorBox.style.display = 'none'; }
-
-    // auto-focus input on load
-    urlInp.focus();
-  </script>
+        // رسالة ترحيب
+        console.log('🎯 نظام محاكاة TikTok - جاهز للاستخدام');
+    </script>
 </body>
 </html>
