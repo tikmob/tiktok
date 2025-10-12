@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أداة تحميل TikTok - جاهزة للاستخدام</title>
+    <title>أداة تحميل TikTok - الإصدار المحسن</title>
     <style>
+        /* نفس الأنماط السابقة - يمكنك إعادة استخدامها */
         :root {
             --primary: #6a11cb;
             --secondary: #2575fc;
@@ -53,14 +54,12 @@
             color: transparent;
         }
         
-        .status-badge {
-            background: #00c853;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 1rem;
-            display: inline-block;
-            margin: 10px 0;
+        .api-status {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
         }
         
         .input-section {
@@ -82,13 +81,6 @@
             border-radius: 10px;
             background: white;
             font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
         }
         
         button {
@@ -100,18 +92,6 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
         }
         
         .loading {
@@ -148,13 +128,6 @@
             max-width: 100%;
             border-radius: 10px;
             margin: 20px 0;
-            background: #000;
-        }
-        
-        .download-btn {
-            background: var(--success);
-            color: white;
-            margin-top: 15px;
         }
         
         .error {
@@ -165,130 +138,42 @@
             border-right: 4px solid var(--danger);
             display: none;
         }
-        
-        .success {
-            background: rgba(76, 175, 80, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-right: 4px solid var(--success);
-            display: none;
-        }
-        
-        .demo-links {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-        
-        .demo-link {
-            display: block;
-            padding: 10px;
-            margin: 5px 0;
-            background: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #ddd;
-        }
-        
-        .demo-link:hover {
-            background: #f0f0f0;
-            border-color: var(--primary);
-        }
-        
-        .video-info {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: right;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .worker-url {
-            background: #f5f5f5;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            margin: 10px 0;
-            direction: ltr;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>أداة تحميل فيديوهات TikTok</h1>
-            <div class="status-badge">✅ Cloudflare Worker نشط ويعمل</div>
-            <p style="color: #666;">الإصدار النهائي - جاهز للاستخدام</p>
-            
-            <div class="worker-url">
-                🔗 Worker URL: https://tikmob.mohammedmila022.workers.dev
-            </div>
+            <h1>أداة تحميل TikTok</h1>
+            <p>الإصدار المحسن مع واجهات متعددة</p>
         </header>
 
-        <div class="success" id="successMessage" style="display: none;">
-            ✅ تم التحميل بنجاح!
-        </div>
-
-        <div class="demo-links">
-            <h3>🔗 اختر رابط تجريبي:</h3>
-            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@tiktok/video/7305166444562353441')">
-                📹 فيديو TikTok الرسمي
-            </div>
-            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@khaby.lame/video/7155834725374676226')">
-                🎭 فيديو Khaby Lame
-            </div>
-            <div class="demo-link" onclick="useDemoLink('https://www.tiktok.com/@bellapoarch/video/6958453274562768130')">
-                👩‍🎤 فيديو Bella Poarch
-            </div>
+        <div class="api-status" id="apiStatus">
+            <p>🔄 جاري اختبار واجهات TikTok...</p>
         </div>
 
         <section class="input-section">
             <div class="input-group">
-                <label for="videoUrl" style="font-weight: bold; color: #333;">أو أدخل رابط فيديو TikTok:</label>
+                <label for="videoUrl">أدخل رابط فيديو TikTok:</label>
                 <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required>
                 <div class="error" id="errorMessage"></div>
-                <button id="fetchBtn">
-                    <span>🚀 تحميل الفيديو بدون علامة مائية</span>
-                </button>
+                <button id="fetchBtn">🚀 تحميل الفيديو</button>
             </div>
         </section>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>جاري تحميل الفيديو عبر Cloudflare Worker...</p>
-            <p><small>قد يستغرق بضع ثواني</small></p>
+            <p>جاري البحث في جميع الواجهات المتاحة...</p>
         </div>
 
         <section class="result-section" id="resultSection">
-            <h2>✅ تم تحميل الفيديو بنجاح!</h2>
-            <div class="video-info">
-                <h3 id="videoTitle">عنوان الفيديو</h3>
-                <p id="videoAuthor">المستخدم: @username</p>
-            </div>
+            <h2>✅ تم العثور على الفيديو</h2>
+            <div id="videoInfo"></div>
             <video class="video-preview" id="videoPreview" controls></video>
-            <button class="download-btn" id="downloadBtn">
-                <span>📥 تحميل الفيديو</span>
-            </button>
+            <button id="downloadBtn">📥 تحميل الفيديو</button>
         </section>
-
-        <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <h3>🎯 حالة النظام:</h3>
-            <ul style="margin: 15px 0; padding-right: 20px;">
-                <li>✅ <strong>Cloudflare Worker</strong>: نشط ومتواصل</li>
-                <li>✅ <strong>الحالة</strong>: يعمل بشكل صحيح</li>
-                <li>✅ <strong>السعة</strong>: 100,000 طلب يومياً</li>
-                <li>✅ <strong>جاهز لآلاف المستخدمين</strong></li>
-            </ul>
-        </div>
     </div>
 
     <script>
-        // رابط Cloudflare Worker الخاص بك
         const CLOUDFLARE_WORKER_URL = 'https://tikmob.mohammedmila022.workers.dev';
 
         // عناصر DOM
@@ -299,14 +184,27 @@
         const videoPreview = document.getElementById('videoPreview');
         const downloadBtn = document.getElementById('downloadBtn');
         const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
-        const videoTitle = document.getElementById('videoTitle');
-        const videoAuthor = document.getElementById('videoAuthor');
+        const videoInfo = document.getElementById('videoInfo');
+        const apiStatus = document.getElementById('apiStatus');
 
-        // استخدام رابط تجريبي
-        function useDemoLink(url) {
-            videoUrlInput.value = url;
-            hideMessages();
+        // اختبار واجهات TikTok
+        async function testAPIs() {
+            const testUrl = 'https://www.tiktok.com/@tiktok/video/7305166444562353441';
+            let workingAPIs = 0;
+            
+            try {
+                const response = await fetch(`${CLOUDFLARE_WORKER_URL}?url=${encodeURIComponent(testUrl)}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    workingAPIs = 1;
+                    apiStatus.innerHTML = `<p style="color: var(--success);">✅ الواجهات تعمل بشكل جيد</p>`;
+                } else {
+                    apiStatus.innerHTML = `<p style="color: var(--warning);">⚠️ بعض الواجهات قد لا تعمل</p>`;
+                }
+            } catch (error) {
+                apiStatus.innerHTML = `<p style="color: var(--danger);">❌ مشكلة في الاتصال</p>`;
+            }
         }
 
         // تحميل الفيديو
@@ -318,62 +216,33 @@
                 return;
             }
             
-            if (!isValidTikTokUrl(videoUrl)) {
-                showError('يرجى إدخال رابط TikTok صحيح');
-                return;
-            }
-            
-            hideMessages();
+            hideError();
             loading.style.display = 'block';
             resultSection.style.display = 'none';
             fetchBtn.disabled = true;
             
             try {
-                console.log('🚀 إرسال طلب إلى Worker:', videoUrl);
-                
                 const response = await fetch(`${CLOUDFLARE_WORKER_URL}?url=${encodeURIComponent(videoUrl)}`);
-                
-                console.log('📡 استجابة Worker:', response.status);
-                
-                if (!response.ok) {
-                    throw new Error(`خطأ في الخادم: ${response.status}`);
-                }
-
                 const result = await response.json();
-                console.log('📦 بيانات النتيجة:', result);
                 
                 if (result.success) {
-                    // عرض الفيديو
                     videoPreview.src = result.data.videoUrl;
-                    videoTitle.textContent = result.data.title || 'فيديو TikTok';
-                    videoAuthor.textContent = `المستخدم: @${result.data.author || 'مستخدم'}`;
+                    videoInfo.innerHTML = `
+                        <h3>${result.data.title}</h3>
+                        <p>المستخدم: @${result.data.author}</p>
+                        ${result.data.note ? `<p style="color: var(--warning);"><small>${result.data.note}</small></p>` : ''}
+                    `;
                     
                     loading.style.display = 'none';
                     resultSection.style.display = 'block';
-                    showSuccess('تم تحميل الفيديو بنجاح!');
                 } else {
-                    throw new Error(result.error || 'فشل في تحميل الفيديو');
+                    throw new Error(result.error);
                 }
                 
             } catch (error) {
-                console.error('❌ خطأ:', error);
                 showError(`فشل في التحميل: ${error.message}`);
             } finally {
                 fetchBtn.disabled = false;
-            }
-        });
-
-        // تحميل الفيديو
-        downloadBtn.addEventListener('click', function() {
-            if (videoPreview.src && !videoPreview.src.includes('blob:')) {
-                const a = document.createElement('a');
-                a.href = videoPreview.src;
-                a.download = 'tiktok-video.mp4';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            } else {
-                showError('لا يوجد فيديو للتحميل');
             }
         });
 
@@ -382,48 +251,26 @@
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
             loading.style.display = 'none';
-            successMessage.style.display = 'none';
         }
 
-        function showSuccess(message) {
-            successMessage.textContent = message;
-            successMessage.style.display = 'block';
+        function hideError() {
             errorMessage.style.display = 'none';
         }
 
-        function hideMessages() {
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
-        }
-
-        function isValidTikTokUrl(url) {
-            const tiktokPattern = /https?:\/\/(www\.)?tiktok\.com\/.+\/video\/\d+/;
-            return tiktokPattern.test(url);
-        }
-
-        // السماح بالدخول باستخدام زر Enter
-        videoUrlInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                fetchBtn.click();
+        // تحميل الفيديو
+        downloadBtn.addEventListener('click', function() {
+            if (videoPreview.src) {
+                const a = document.createElement('a');
+                a.href = videoPreview.src;
+                a.download = 'tiktok-video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             }
         });
 
-        // اختبار اتصال الـ Worker
-        async function testWorkerConnection() {
-            try {
-                const testResponse = await fetch(CLOUDFLARE_WORKER_URL);
-                console.log('✅ اختبار الاتصال:', testResponse.status);
-            } catch (error) {
-                console.warn('⚠️ تحذير اتصال:', error.message);
-            }
-        }
-
-        // عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            testWorkerConnection();
-            console.log('🚀 TikTok Downloader جاهز للاستخدام');
-            console.log('🔗 Worker URL:', CLOUDFLARE_WORKER_URL);
-        });
+        // اختبار الواجهات عند التحميل
+        document.addEventListener('DOMContentLoaded', testAPIs);
     </script>
 </body>
 </html>
