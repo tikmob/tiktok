@@ -1,0 +1,23 @@
+# TikTok Video Downloader - Robots.txt
+User-agent: *
+Allow: /
+
+# منع المجلدات الخاصة (إذا وجدت)
+Disallow: /admin/
+Disallow: /private/ 
+Disallow: /tmp/
+
+# معدل الزحف (اختياري)
+Crawl-delay: 1
+
+# خريطة الموقع
+Sitemap: https://tikmob.github.io/tiktok/sitemap.xml
+
+# محركات بحث محددة
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
