@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- الصفحة الرئيسية -->
+  <url>
+    <loc>https://tikmob.github.io/tiktok/</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- صفحات الخدمات والادوات -->
+  <url>
+    <loc>https://tikmob.github.io/tiktok/#features</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/#how-it-works</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/#faq</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- صفحات الأدوات المختلفة -->
+  <url>
+    <loc>https://tikmob.github.io/tiktok/tiktok-downloader</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/tiktok-mp3-downloader</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/tiktok-watermark-remover</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/tiktok-to-mp4</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- صفحات المساعدة والدعم -->
+  <url>
+    <loc>https://tikmob.github.io/tiktok/how-to-download-tiktok</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/tiktok-download-guide</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- صفحات سياسية -->
+  <url>
+    <loc>https://tikmob.github.io/tiktok/privacy-policy</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/terms-of-service</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/dmca</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- صفحات الاتصال -->
+  <url>
+    <loc>https://tikmob.github.io/tiktok/contact</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://tikmob.github.io/tiktok/about</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
