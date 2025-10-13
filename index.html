@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Free TikTok Video Downloader - Download TikTok videos without watermark in MP4 format. Fast, easy and works with all TikTok links.">
-    <meta name="keywords" content="tiktok downloader, tiktok video downloader, tiktok to mp4, download tiktok videos, download tiktok video, tiktok mp4 download, save tiktok video, tiktok download without watermark">
+    <meta name="keywords" content="tiktok downloader, tiktok video downloader, tiktok to mp4, download tiktok videos, download tiktok video, tiktok mp4 download, save tiktok video, tiktok download without watermark, tiktokto mp4, tiktokdownloadvideo, sss tiktoj, snaptik spp, save tik tok com, load video tiktok, downloadtiktok com, downloaders tik tok, download tiktok without water, dow tiktok without watermark, daolnwod tiktok, downl9ad tiktok, dow video tiktok, snaptik tiktok downloader, tiktok to mp3, save tiktok video, down video tiktok, tiktok downloader no watermark, snaptiktok, sss tiktok, tiktok to mp4, tiktok saver, tiktok downloader app, save tiktok, download tiktok without watermark, tiktok watermark remover, tiktok download video, download video tiktok, tiktokvideodownload com, tik video download, tik tokvideo download, tik tok video dow, tik tik downloader, download tik videos, daolnwod tiktok video, tiktokvideodownload, snaptiks, downloadtiktokvideo com, tiktok dow, snap tik, tiktokdownload, download tiktok video, tiktok video downloader">
     <meta name="author" content="TikTok Downloader">
-    <title>TikTok Video Downloader - Download TikTok Videos Without Watermark</title>
+    <title>TikTok Video Downloader - Download TikTok Videos Without Watermark | MP4 Format</title>
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -34,6 +34,20 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Simply paste the TikTok video URL in the input field and click the download button. Our tool will remove the watermark automatically."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Is this TikTok downloader free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, our TikTok video downloader is completely free to use with no hidden costs or registration required."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What video formats are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our downloader supports MP4 format, which is compatible with all devices and media players."
         }
       }]
     }
@@ -72,6 +86,15 @@
             padding: 30px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             color: #333;
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 20px;
+        }
+        .main-content {
+            grid-column: 1;
+        }
+        .sidebar {
+            grid-column: 2;
         }
         header {
             text-align: center;
@@ -243,6 +266,20 @@
             font-weight: bold;
             border: 2px dashed #ccc;
         }
+        .ad-sidebar {
+            width: 100%;
+            height: 600px;
+            background: #f0f0f0;
+            margin: 0 auto;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: bold;
+            border: 2px dashed #ccc;
+            margin-bottom: 20px;
+        }
         
         /* Features section */
         .features {
@@ -295,130 +332,149 @@
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                grid-column: 1;
             }
             h1 {
                 font-size: 2rem;
+            }
+            .ad-sidebar {
+                height: 250px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header Banner Ad -->
-        <div class="ad-container">
-            <div class="ad-banner">Advertisement Space (728x90)</div>
+        <div class="main-content">
+            <!-- Header Banner Ad -->
+            <div class="ad-container">
+                <div class="ad-banner">Advertisement Space (728x90)</div>
+            </div>
+            
+            <header>
+                <h1>🚀 TikTok Video Downloader</h1>
+                <p class="subtitle">Download TikTok videos without watermark in MP4 format</p>
+            </header>
+
+            <div class="api-test" id="apiTest">
+                <h3>🔍 System Status: <span id="statusText">All Methods Available</span></h3>
+                <div class="server-list" id="serverList"></div>
+            </div>
+
+            <section style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
+                <label for="videoUrl" style="font-weight: bold; color: #333; display: block; margin-bottom: 10px;">Enter TikTok Video URL:</label>
+                <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required
+                       style="padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; width: 100%; margin-bottom: 10px;">
+                
+                <div id="errorMessage"></div>
+                
+                <button id="fetchBtn">
+                    <span>🚀 Download Video (Auto-Select Best Method)</span>
+                </button>
+            </section>
+
+            <div id="loading">
+                <div></div>
+                <p id="loadingText">Downloading video...</p>
+            </div>
+
+            <section id="resultSection">
+                <h2>✅ Video Downloaded Successfully!</h2>
+                <div class="method-indicator" id="methodUsed">
+                    Downloaded via: <strong id="methodName">AirServer</strong>
+                </div>
+                <video id="videoPreview" controls></video>
+                <button id="downloadBtn">📥 Download Video</button>
+            </section>
+
+            <!-- Middle Banner Ad -->
+            <div class="ad-container">
+                <div class="ad-banner">Advertisement Space (728x90)</div>
+            </div>
+
+            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                <h3>✅ Available Download Methods:</h3>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li><strong>AirServer</strong> - High Capacity <span class="status-badge status-active">Recommended</span></li>
+                    <li><strong>CoreServer</strong> - Backup Method <span class="status-badge status-backup">Limited</span></li>
+                </ul>
+                <p style="color: #666; margin-top: 10px;">
+                    💡 <strong>Smart System:</strong> Our downloader automatically selects the best available method for each request, ensuring maximum reliability and speed.
+                </p>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast Download</h3>
+                    <p>Download TikTok videos quickly without any delays</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>No Watermark</h3>
+                    <p>Get clean TikTok videos without any watermark</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Works perfectly on all devices and browsers</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Auto-Fallback</h3>
+                    <p>Automatically switches to backup methods if needed</p>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <div class="faq-question">How to download TikTok videos without watermark?</div>
+                    <p>Simply paste the TikTok video URL in the input field above and click the download button. Our smart system will automatically use the best available method to download your video without watermark.</p>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Which download method is the best?</div>
+                    <p>Our system automatically selects the best method for you. AirServer is our primary method with high capacity, with CoreServer as a reliable backup.</p>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is this TikTok downloader free?</div>
+                    <p>Yes, our TikTok video downloader is completely free to use with no hidden costs or registration required.</p>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What if the download fails?</div>
+                    <p>Our system automatically tries multiple methods. If one fails, it immediately switches to the next available option for maximum reliability.</p>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is it legal to download TikTok videos?</div>
+                    <p>Downloading TikTok videos for personal use is generally acceptable. However, you should respect copyright and not redistribute content without permission.</p>
+                </div>
+            </div>
+
+            <!-- Bottom Banner Ad -->
+            <div class="ad-container">
+                <div class="ad-banner">Advertisement Space (728x90)</div>
+            </div>
+
+            <footer>
+                <p>© 2025 TikTok Video Downloader - Download TikTok Videos Without Watermark</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    This tool helps you download TikTok videos in MP4 format. TikTok is a registered trademark of ByteDance Ltd.
+                    <br>Powered by smart auto-selection technology for maximum reliability.
+                </p>
+            </footer>
         </div>
         
-        <header>
-            <h1>🚀 TikTok Video Downloader</h1>
-            <p class="subtitle">Download TikTok videos without watermark in MP4 format</p>
-        </header>
-
-
-
-        <div class="api-test" id="apiTest">
-            <h3>🔍 Server Status</h3>
-            <div class="server-list" id="serverList"></div>
+        <div class="sidebar">
+            <!-- Sidebar Ads -->
+            <div class="ad-sidebar">Advertisement Space (250x600)</div>
+            <div class="ad-sidebar">Advertisement Space (250x600)</div>
+            <div class="ad-sidebar">Advertisement Space (250x600)</div>
         </div>
-
-        <section style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
-            <label for="videoUrl" style="font-weight: bold; color: #333; display: block; margin-bottom: 10px;">Enter TikTok Video URL:</label>
-            <input type="url" id="videoUrl" placeholder="https://www.tiktok.com/@username/video/1234567890" required
-                   style="padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 1rem; width: 100%; margin-bottom: 10px;">
-            
-            <div id="errorMessage"></div>
-            
-            <button id="fetchBtn">
-                <span>🚀 Download Video (Auto-Select Best Method)</span>
-            </button>
-        </section>
-
-        <div id="loading">
-            <div></div>
-            <p id="loadingText">Downloading video...</p>
-        </div>
-
-        <section id="resultSection">
-            <h2>✅ Video Downloaded Successfully!</h2>
-            <div class="method-indicator" id="methodUsed">
-                Downloaded via: <strong id="methodName">AirServer</strong>
-            </div>
-            <video id="videoPreview" controls></video>
-            <button id="downloadBtn">📥 Download Video</button>
-        </section>
-
-        <!-- Middle Banner Ad -->
-        <div class="ad-container">
-            <div class="ad-banner">Advertisement Space (728x90)</div>
-        </div>
-
-        <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <h3>✅ Available Download Methods:</h3>
-            <ul style="margin: 15px 0; padding-left: 20px;">
-                <li><strong>AirServer</strong> - High Capacity <span class="status-badge status-active">Recommended</span></li>
-                <li><strong>CoreServer</strong> - Backup Method <span class="status-badge status-backup">Limited</span></li>
-            </ul>
-            <p style="color: #666; margin-top: 10px;">
-                💡 <strong>Smart System:</strong> Our downloader automatically selects the best available method for each request, ensuring maximum reliability and speed.
-            </p>
-        </div>
-
-        <!-- Features Section -->
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Fast Download</h3>
-                <p>Download TikTok videos quickly without any delays</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>No Watermark</h3>
-                <p>Get clean TikTok videos without any watermark</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>Mobile Friendly</h3>
-                <p>Works perfectly on all devices and browsers</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔄</div>
-                <h3>Auto-Fallback</h3>
-                <p>Automatically switches to backup methods if needed</p>
-            </div>
-        </div>
-
-        <!-- FAQ Section -->
-        <div class="faq-section">
-            <h2 style="text-align: center; margin-bottom: 20px;">Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">How to download TikTok videos without watermark?</div>
-                <p>Simply paste the TikTok video URL in the input field above and click the download button. Our smart system will automatically use the best available method to download your video without watermark.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Which download method is the best?</div>
-                <p>Our system automatically selects the best method for you. Cloudflare Worker is our primary method (100,000+ requests daily), with TikWM as a reliable backup.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Is this TikTok downloader free?</div>
-                <p>Yes, our TikTok video downloader is completely free to use with no hidden costs or registration required.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">What if the download fails?</div>
-                <p>Our system automatically tries multiple methods. If one fails, it immediately switches to the next available option for maximum reliability.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Is it legal to download TikTok videos?</div>
-                <p>Downloading TikTok videos for personal use is generally acceptable. However, you should respect copyright and not redistribute content without permission.</p>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2025 TikTok Video Downloader - Download TikTok Videos Without Watermark</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">
-                This tool helps you download TikTok videos in MP4 format. TikTok is a registered trademark of ByteDance Ltd.
-                <br>Powered by smart auto-selection technology for maximum reliability.
-            </p>
-        </footer>
     </div>
 
     <script>
@@ -684,8 +740,8 @@
             `;
             serverList.appendChild(tikwmItem);
 
-            const statusElement = document.querySelector('#apiTest h3');
-            statusElement.innerHTML = `🔍 System Status: All Methods Available`;
+            const statusElement = document.getElementById('statusText');
+            statusElement.textContent = 'All Methods Available';
         }
 
         // ====== Handle UI ======
@@ -762,10 +818,10 @@
                 
                 // Show which method was used
                 if (result.method === 'worker') {
-                    methodName.textContent = 'Cloudflare Worker (Primary)';
+                    methodName.textContent = 'AirServer (Primary)';
                     methodUsed.style.background = '#e8f5e8';
                 } else {
-                    methodName.textContent = 'TikWM API (Backup)';
+                    methodName.textContent = 'CoreServer (Backup)';
                     methodUsed.style.background = '#fff3cd';
                 }
                 
