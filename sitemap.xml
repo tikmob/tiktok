@@ -81,21 +81,21 @@
 
   <!-- صفحات سياسية -->
   <url>
-    <loc>https://tikmob.github.io/tiktok/privacy-policy</loc>
+    <loc>https://tikmob.github.io/tiktok/privacy-policy.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://tikmob.github.io/tiktok/terms-of-service</loc>
+    <loc>https://tikmob.github.io/tiktok/terms-of-service.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://tikmob.github.io/tiktok/dmca</loc>
+    <loc>https://tikmob.github.io/tiktok/dmca.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -103,7 +103,7 @@
 
   <!-- صفحات الاتصال -->
   <url>
-    <loc>https://tikmob.github.io/tiktok/contact</loc>
+    <loc>https://tikmob.github.io/tiktok/contact.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
